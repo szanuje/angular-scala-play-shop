@@ -1,0 +1,11 @@
+### models
+- book
+- laptop
+- smartphone
+- tshirt
+- shoes
+- watch
+- game
+- tv
+- console
+- cable
