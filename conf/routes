@@ -4,6 +4,7 @@ GET     /                           controllers.FrontendController.index()
 # An example route (Prefix all API routes with apiPrefix defined in application.conf)
 # GET     /api/summary                controllers.HomeController.appSummary
 GET     /api/ping                controllers.ApiController.ping
+GET     /api/book                controllers.ApiController.book
 
 # Serve static assets under public directory
 GET /*file controllers.FrontendController.assetOrDefault(file)
