@@ -48,7 +48,7 @@ object FrontendRunHook {
        */
       override def afterStarted(): Unit = {
         process = Option(
-          Process(npmRun, base / "ui").run
+          Process(npmRun, base / "ui", "CI" -> "true").run
         )
       }
 
