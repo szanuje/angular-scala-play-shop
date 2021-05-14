@@ -4,7 +4,12 @@ GET     /                           controllers.FrontendController.index()
 # An example route (Prefix all API routes with apiPrefix defined in application.conf)
 # GET     /api/summary                controllers.HomeController.appSummary
 GET     /api/ping                controllers.ApiController.ping
-GET     /api/book                controllers.ApiController.book
+# books
+GET     /api/books                controllers.BookController.getBooks
+GET     /api/books/:id                controllers.BookController.getBookById(id: java.util.UUID)
+POST     /api/books                controllers.BookController.addBook()
+PUT     /api/books/:id                controllers.BookController.updateBook(id: java.util.UUID)
+DELETE     /api/books/:id                controllers.BookController.deleteBook(id: java.util.UUID)
 
 # Serve static assets under public directory
 GET /*file controllers.FrontendController.assetOrDefault(file)
