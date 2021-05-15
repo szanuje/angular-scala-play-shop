@@ -1,18 +1,81 @@
-# Serve index page from public directory
-GET     /                           controllers.FrontendController.index()
+# Map static resources from the /public folder to the /assets URL path
+# GET     /assets/*file            controllers.Assets.versioned(path="/public", file: Asset)
 
-# An example route (Prefix all API routes with apiPrefix defined in application.conf)
-# GET     /api/summary                controllers.HomeController.appSummary
-GET     /api/ping                controllers.ApiController.ping
-# books
-GET     /api/books                controllers.BookController.getBooks
-GET     /api/books/:id                controllers.BookController.getBookById(id: java.util.UUID)
-POST     /api/books                controllers.BookController.addBook()
-PUT     /api/books/:id                controllers.BookController.updateBook(id: java.util.UUID)
-DELETE     /api/books/:id                controllers.BookController.deleteBook(id: java.util.UUID)
+# Serve index page from public directory
+GET     /                        controllers.FrontendController.index()
 
 # Serve static assets under public directory
 GET /*file controllers.FrontendController.assetOrDefault(file)
 
-# Map static resources from the /public folder to the /assets URL path
-# GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
+# test
+GET     /api/ping                controllers.ApiController.ping
+
+# books
+GET     /api/books               controllers.BookController.getBooks
+GET     /api/books/:id           controllers.BookController.getBookById(id: java.util.UUID)
+POST    /api/books               controllers.BookController.addBook()
+PUT     /api/books/:id           controllers.BookController.updateBook(id: java.util.UUID)
+DELETE  /api/books/:id           controllers.BookController.deleteBook(id: java.util.UUID)
+
+# cables
+GET     /api/cables              controllers.CableController.getCables
+GET     /api/cables/:id          controllers.CableController.getCableById(id: java.util.UUID)
+POST    /api/cables              controllers.CableController.addCable()
+PUT     /api/cables/:id          controllers.CableController.updateCable(id: java.util.UUID)
+DELETE  /api/cables/:id          controllers.CableController.deleteCable(id: java.util.UUID)
+
+# consoles
+GET     /api/consoles            controllers.ConsoleController.getConsoles
+GET     /api/consoles/:id        controllers.ConsoleController.getConsoleById(id: java.util.UUID)
+POST    /api/consoles            controllers.ConsoleController.addConsole()
+PUT     /api/consoles/:id        controllers.ConsoleController.updateConsole(id: java.util.UUID)
+DELETE  /api/consoles/:id        controllers.ConsoleController.deleteConsole(id: java.util.UUID)
+
+# games
+GET     /api/games               controllers.GameController.getGames
+GET     /api/games/:id           controllers.GameController.getGameById(id: java.util.UUID)
+POST    /api/games               controllers.GameController.addGame()
+PUT     /api/games/:id           controllers.GameController.updateGame(id: java.util.UUID)
+DELETE  /api/games/:id           controllers.GameController.deleteGame(id: java.util.UUID)
+
+# laptops
+GET     /api/laptops             controllers.LaptopController.getLaptops
+GET     /api/laptops/:id         controllers.LaptopController.getLaptopById(id: java.util.UUID)
+POST    /api/laptops             controllers.LaptopController.addLaptop()
+PUT     /api/laptops/:id         controllers.LaptopController.updateLaptop(id: java.util.UUID)
+DELETE  /api/laptops/:id         controllers.LaptopController.deleteLaptop(id: java.util.UUID)
+
+# phones
+GET     /api/phones             controllers.PhoneController.getPhones
+GET     /api/phones/:id         controllers.PhoneController.getPhoneById(id: java.util.UUID)
+POST    /api/phones             controllers.PhoneController.addPhone()
+PUT     /api/phones/:id         controllers.PhoneController.updatePhone(id: java.util.UUID)
+DELETE  /api/phones/:id         controllers.PhoneController.deletePhone(id: java.util.UUID)
+
+# shoes
+GET     /api/shoes              controllers.ShoesController.getShoes
+GET     /api/shoes/:id          controllers.ShoesController.getShoesById(id: java.util.UUID)
+POST    /api/shoes              controllers.ShoesController.addShoes()
+PUT     /api/shoes/:id          controllers.ShoesController.updateShoes(id: java.util.UUID)
+DELETE  /api/shoes/:id          controllers.ShoesController.deleteShoes(id: java.util.UUID)
+
+# tshirts
+GET     /api/tshirts            controllers.TshirtController.getTshirts
+GET     /api/tshirts/:id        controllers.TshirtController.getTshirtById(id: java.util.UUID)
+POST    /api/tshirts            controllers.TshirtController.addTshirt()
+PUT     /api/tshirts/:id        controllers.TshirtController.updateTshirt(id: java.util.UUID)
+DELETE  /api/tshirts/:id        controllers.TshirtController.deleteTshirt(id: java.util.UUID)
+
+# tvs
+GET     /api/tvs                controllers.TvController.getTvs
+GET     /api/tvs/:id            controllers.TvController.getTvById(id: java.util.UUID)
+POST    /api/tvs                controllers.TvController.addTv()
+PUT     /api/tvs/:id            controllers.TvController.updateTv(id: java.util.UUID)
+DELETE  /api/tvs/:id            controllers.TvController.deleteTv(id: java.util.UUID)
+
+# watches
+GET     /api/watches            controllers.WatchController.getWatches
+GET     /api/watches/:id        controllers.WatchController.getWatchById(id: java.util.UUID)
+POST    /api/watches            controllers.WatchController.addWatch()
+PUT     /api/watches/:id        controllers.WatchController.updateWatch(id: java.util.UUID)
+DELETE  /api/watches/:id        controllers.WatchController.deleteWatch(id: java.util.UUID)
