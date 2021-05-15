@@ -1,5 +1,12 @@
 package models
 
-class Watch(brand: String, diameter: Int) {
+import java.util.UUID
 
+case class Watch(uuid: UUID, brand: String, diameter: Int) {
+
+  def getUUID = uuid
+
+  def getBrand = brand
+
+  def getDiameter = diameter
 }

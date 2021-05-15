@@ -7,8 +7,7 @@ import slick.jdbc.PostgresProfile.api._
 
 import java.util.UUID
 import javax.inject.{Inject, Singleton}
-import scala.concurrent.duration.Duration
-import scala.concurrent.{Await, ExecutionContext, Future}
+import scala.concurrent.{ExecutionContext, Future}
 
 
 @Singleton

@@ -1,5 +1,12 @@
 package models
 
-class Tshirt(brand: String, size: String) {
+import java.util.UUID
 
+case class Tshirt(uuid: UUID, brand: String, size: String) {
+
+  def getUUID = uuid
+
+  def getBrand = brand
+
+  def getSize = size
 }
