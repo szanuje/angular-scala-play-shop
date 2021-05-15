@@ -11,7 +11,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class ConsoleService @Inject()(protected val dbConfigProvider: DatabaseConfigProvider)
-                            (implicit ec: ExecutionContext) extends HasDatabaseConfigProvider[JdbcProfile] {
+                              (implicit ec: ExecutionContext) extends HasDatabaseConfigProvider[JdbcProfile] {
 
   private val consoles = TableQuery[ConsoleTable]
 
