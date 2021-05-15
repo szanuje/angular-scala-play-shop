@@ -4,9 +4,6 @@
 # Serve index page from public directory
 GET     /                        controllers.FrontendController.index()
 
-# Serve static assets under public directory
-GET /*file controllers.FrontendController.assetOrDefault(file)
-
 # test
 GET     /api/ping                controllers.ApiController.ping
 
@@ -79,3 +76,6 @@ GET     /api/watches/:id        controllers.WatchController.getWatchById(id: jav
 POST    /api/watches            controllers.WatchController.addWatch()
 PUT     /api/watches/:id        controllers.WatchController.updateWatch(id: java.util.UUID)
 DELETE  /api/watches/:id        controllers.WatchController.deleteWatch(id: java.util.UUID)
+
+# Serve static assets under public directory
+GET /*file controllers.FrontendController.assetOrDefault(file)
