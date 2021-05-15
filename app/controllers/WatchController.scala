@@ -15,7 +15,7 @@ class WatchController @Inject()(cc: ControllerComponents, watchService: WatchSer
   implicit val watchWrites: OWrites[Watch] = Json.writes[Watch]
   implicit val watchReads: Reads[Watch] = Json.reads[Watch]
 
-  def getWatchs: Action[AnyContent] = Action.async { implicit request => {
+  def getWatches: Action[AnyContent] = Action.async { implicit request => {
     watchService.findAll()
       .map(res => {
         println("getWatchs: " + res)

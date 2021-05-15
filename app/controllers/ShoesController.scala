@@ -15,7 +15,7 @@ class ShoesController @Inject()(cc: ControllerComponents, shoesService: ShoesSer
   implicit val shoesWrites: OWrites[Shoes] = Json.writes[Shoes]
   implicit val shoesReads: Reads[Shoes] = Json.reads[Shoes]
 
-  def getShoess: Action[AnyContent] = Action.async { implicit request => {
+  def getShoes: Action[AnyContent] = Action.async { implicit request => {
     shoesService.findAll()
       .map(res => {
         println("getShoess: " + res)
