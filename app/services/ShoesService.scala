@@ -40,7 +40,7 @@ class ShoesService @Inject()(protected val dbConfigProvider: DatabaseConfigProvi
 
     def brand = column[String]("brand")
 
-    def size = column[Int]("size")
+    def size = column[Int]("siz")
 
     def * = (uuid, brand, size) <> (Shoes.tupled, Shoes.unapply)
   }

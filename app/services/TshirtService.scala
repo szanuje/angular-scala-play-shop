@@ -40,7 +40,7 @@ class TshirtService @Inject()(protected val dbConfigProvider: DatabaseConfigProv
 
     def brand = column[String]("brand")
 
-    def size = column[String]("size")
+    def size = column[String]("siz")
 
     def * = (uuid, brand, size) <> (Tshirt.tupled, Tshirt.unapply)
   }

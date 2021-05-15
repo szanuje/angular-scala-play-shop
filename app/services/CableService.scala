@@ -40,7 +40,7 @@ class CableService @Inject()(protected val dbConfigProvider: DatabaseConfigProvi
 
     def name = column[String]("name")
 
-    def length = column[String]("length")
+    def length = column[String]("lengt")
 
     def * = (uuid, name, length) <> (Cable.tupled, Cable.unapply)
   }

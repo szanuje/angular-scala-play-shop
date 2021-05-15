@@ -40,7 +40,7 @@ class TvService @Inject()(protected val dbConfigProvider: DatabaseConfigProvider
 
     def model = column[String]("model")
 
-    def size = column[Int]("size")
+    def size = column[Int]("sizeinch")
 
     def * = (uuid, model, size) <> (Tv.tupled, Tv.unapply)
   }
