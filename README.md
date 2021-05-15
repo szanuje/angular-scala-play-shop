@@ -1,3 +1,6 @@
+####
+postman collection for testing api is available: `postman-shop.json`
+
 ### models
 - book
 - laptop
