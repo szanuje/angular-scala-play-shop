@@ -77,5 +77,10 @@ POST    /api/watches            controllers.WatchController.addWatch()
 PUT     /api/watches/:id        controllers.WatchController.updateWatch(id: java.util.UUID)
 DELETE  /api/watches/:id        controllers.WatchController.deleteWatch(id: java.util.UUID)
 
+GET     /api/products/all       controllers.ProductController.getProducts
+GET     /api/products           controllers.ProductController.getProductsBy(queryString: Option[String])
+#GET     /api/products           controllers.ProductController.getProductsByCategory(category: Option[String])
+POST    /api/products           controllers.ProductController.addProduct()
+
 # Serve static assets under public directory
 GET /*file controllers.FrontendController.assetOrDefault(file)

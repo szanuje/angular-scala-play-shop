@@ -19,3 +19,4 @@ libraryDependencies += "org.postgresql" % "postgresql" % "42.2.6"
 
 // Adds additional packages into conf/routes
 // play.sbt.routes.RoutesKeys.routesImport += "com.maksple.binders._"
+libraryDependencies += "org.mongodb.scala" %% "mongo-scala-driver" % "2.8.0"

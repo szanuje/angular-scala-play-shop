@@ -3,7 +3,7 @@ package controllers
 import models.Book
 import play.api.libs.json.{Json, OWrites, Reads}
 import play.api.mvc.{AbstractController, Action, AnyContent, ControllerComponents}
-import services.BookService
+import services.{BookService, ProductService}
 
 import java.util.UUID
 import javax.inject.{Inject, Singleton}
