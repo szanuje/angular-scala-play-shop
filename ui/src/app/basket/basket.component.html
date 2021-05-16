@@ -1,0 +1,14 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>
+            <p>
+                <span matBadge="{{basket.length}}" matBadgeOverlap="false">Basket</span>
+            </p>
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <mat-list>
+            <mat-list-item *ngFor="let product of basket">{{product.name}}</mat-list-item>
+        </mat-list>
+    </mat-card-content>
+</mat-card>
