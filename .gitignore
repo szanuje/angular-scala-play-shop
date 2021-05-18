@@ -5,6 +5,8 @@ target
 /.classpath
 /.project
 /.settings
+/.frontend
+public
 /RUNNING_PID
 ### Java template
 # Compiled class file
