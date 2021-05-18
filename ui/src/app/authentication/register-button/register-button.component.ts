@@ -11,6 +11,7 @@ export class RegisterButtonComponent implements OnInit {
   constructor(public auth: AuthService) { }
 
   ngOnInit(): void {
+  //
   }
 
   registerWithRedirect(): void {

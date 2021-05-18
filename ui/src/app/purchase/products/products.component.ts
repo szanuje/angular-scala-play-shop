@@ -22,9 +22,13 @@ export class ProductsComponent implements OnInit {
   currentPageSize: 6 | 12 = 6;
   currentPageIndex: number = 0;
 
-  constructor() { }
+  constructor() {
+  //
+  }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+  //
+  }
 
   onPaginateChange(event: any) {
     console.log(event);

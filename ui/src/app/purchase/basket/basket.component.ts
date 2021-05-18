@@ -10,9 +10,12 @@ export class BasketComponent implements OnInit {
 
   @Input() basket: Product[] = [];
 
-  constructor() { }
+  constructor() {
+  //
+  }
 
   ngOnInit(): void {
+  //
   }
 
 }

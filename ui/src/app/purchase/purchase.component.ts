@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Product } from '../_model/product';
 
 @Component({
@@ -36,9 +36,12 @@ export class PurchaseComponent implements OnInit {
     {name: 'name22', description: 'desc4'},
   ];
 
-  constructor() { }
+  constructor() {
+  //
+  }
 
   ngOnInit(): void {
+  //
   }
 
   addProductToBasket(product: Product) {

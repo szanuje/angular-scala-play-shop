@@ -15,6 +15,7 @@ export class LogoutButtonComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+  //
   }
 
   logout(): void {
