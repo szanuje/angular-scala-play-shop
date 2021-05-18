@@ -6,7 +6,7 @@
     "build": "ng build",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "start": "ng serve --open --proxy-config src/proxy.conf.js --host 0.0.0.0",
+    "start": "ng serve --ssl --open --proxy-config src/proxy.conf.js --host 0.0.0.0",
     "test": "ng test --watch",
     "test:ci": "ng test --watch=false --browsers ChromeHeadless",
     "test:coverage": "ng test --watch=true --code-coverage=true",
@@ -26,6 +26,9 @@
     "@angular/platform-browser": "~11.2.13",
     "@angular/platform-browser-dynamic": "~11.2.13",
     "@angular/router": "~11.2.13",
+    "@auth0/auth0-angular": "^1.5.0",
+    "https": "^1.0.0",
+    "https-localhost": "^4.6.5",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.11.3"

@@ -1,0 +1,22 @@
+version: '3.4'
+
+services:
+  my-mongo:
+    container_name: 'mongo'
+    image: mongo:latest
+    network_mode: host
+    ports:
+      - "27017:27017"
+  my-server:
+    container_name: 'my-server'
+    #    build: .
+    image: mjudnauszy/scala-play-angular-shop_my-server:latest
+    network_mode: host
+    depends_on:
+      - my-mongo
+    ports:
+      - "4200:4200"
+      - "9000:9000"
+    expose:
+      - "4200"
+      - "9000"
