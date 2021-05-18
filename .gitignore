@@ -6,6 +6,9 @@ target
 /.project
 /.settings
 /.frontend
+/.g8
+/.bsp
+
 public
 /RUNNING_PID
 ### Java template
@@ -119,4 +122,26 @@ fabric.properties
 
 # Android studio 3.1+ serialized cache file
 .idea/caches/build_file_checksums.ser
+
+### PlayFramework template
+# Ignore Play! working directory #
+bin/
+/db
+.eclipse
+/lib/
+/logs/
+/modules
+/project/project
+/project/target
+/target
+tmp/
+test-result
+server.pid
+*.eml
+/dist/
+.cache
+
+### Scala template
+*.class
+*.log
 
