@@ -4,14 +4,14 @@ services:
   my-mongo:
     container_name: 'mongo'
     image: mongo:latest
-    environment:
-      - MONGO_HOST=my-mongo
     ports:
       - "27017:27017"
   my-server:
     container_name: 'my-server'
     #    build: .
     image: mjudnauszy/scala-play-angular-shop_my-server:latest
+    environment:
+      - MONGO_HOST=my-mongo
     depends_on:
       - my-mongo
     ports:
