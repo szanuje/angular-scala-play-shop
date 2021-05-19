@@ -11,7 +11,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class ProductService @Inject()(implicit ec: ExecutionContext, config: Configuration) {
 
-  val host = config.underlying.getString("MONGO_HOST")
+  val host = config.underlying.getString("MONGO_H")
   val MONGO_URL = "mongodb://" + host + ":27017"
 
   def findAll(): Future[Seq[Document]] = {
