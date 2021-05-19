@@ -4,7 +4,6 @@ services:
   my-mongo:
     container_name: 'mongo'
     image: mongo:latest
-    network_mode: host
     ports:
       - "27017:27017"
   my-server:
