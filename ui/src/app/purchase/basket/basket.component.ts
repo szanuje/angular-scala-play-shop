@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Product } from '../../_model/product';
 
 @Component({
@@ -8,9 +9,11 @@ import { Product } from '../../_model/product';
 })
 export class BasketComponent implements OnInit {
 
+  path: string = '/checkout';
+
   @Input() basket: Product[] = [];
 
-  constructor() {
+  constructor(router: Router) {
   //
   }
 

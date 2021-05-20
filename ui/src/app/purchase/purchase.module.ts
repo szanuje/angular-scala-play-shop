@@ -4,6 +4,7 @@ import { PurchaseComponent } from './purchase.component';
 import { BasketComponent } from './basket/basket.component';
 import { ProductsComponent } from './products/products.component';
 import { AngularMaterialModule } from '../material.module';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import { AngularMaterialModule } from '../material.module';
   ],
   imports: [
     CommonModule,
-    AngularMaterialModule
+    AngularMaterialModule,
+    RouterModule
   ],
   exports: [
     PurchaseComponent,

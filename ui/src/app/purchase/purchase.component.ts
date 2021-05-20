@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Product } from '../_model/product';
 
 @Component({
@@ -36,7 +37,7 @@ export class PurchaseComponent implements OnInit {
     {name: 'name22', description: 'desc4'},
   ];
 
-  constructor() {
+  constructor(private router: Router) {
   //
   }
 
