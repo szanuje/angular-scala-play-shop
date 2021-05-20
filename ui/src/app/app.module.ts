@@ -12,13 +12,15 @@ import { environment as env } from '../environments/environment';
 import { PurchaseModule } from './purchase/purchase.module';
 import { CommonModule } from '@angular/common';
 import { AuthenticationModule } from './authentication/authentication.module';
+import { CheckoutComponent } from './checkout/checkout.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     LoginComponent,
-    MenuComponent
+    MenuComponent,
+    CheckoutComponent
   ],
   imports: [
     CommonModule,
