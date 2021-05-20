@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { BasketService } from '../shared/services/basket-service';
+import { BasketProduct } from '../_model/basket';
 import { Product } from '../_model/product';
 
 @Component({
@@ -8,34 +10,33 @@ import { Product } from '../_model/product';
   styleUrls: ['./purchase.component.scss'],
 })
 export class PurchaseComponent implements OnInit {
-  basket: Product[] = [];
+  basket: BasketProduct = {};
+  basketSize: number = 0;
 
   products: Product[] = [
-    { name: 'name1', description: 'desc1' },
-    { name: 'name2', description: 'desc2' },
-    { name: 'name3', description: 'desc3' },
-    { name: 'name4', description: 'desc4' },
-    { name: 'name5', description: 'desc5' },
-    { name: 'name6', description: 'desc6' },
-    { name: 'name7', description: 'desc1' },
-    { name: 'name8', description: 'desc2' },
-    { name: 'name9', description: 'desc3' },
-    { name: 'name10', description: 'desc4' },
-    { name: 'name11', description: 'desc4' },
-    { name: 'name12', description: 'desc4' },
-    { name: 'name13', description: 'desc4' },
-    { name: 'name14', description: 'desc4' },
-    { name: 'name15', description: 'desc4' },
-    { name: 'name16', description: 'desc4' },
-    { name: 'name17', description: 'desc4' },
-    { name: 'name18', description: 'desc4' },
-    { name: 'name19', description: 'desc4' },
-    { name: 'name20', description: 'desc4' },
-    { name: 'name21', description: 'desc4' },
-    { name: 'name22', description: 'desc4' },
+    { name: 'name1', category: 'cat', description: 'desc1', price: 20.2 },
+    { name: 'name2', category: 'cat', description: 'desc1', price: 20.2 },
+    { name: 'name3', category: 'cat', description: 'desc1', price: 20.2 },
+    { name: 'name4', category: 'cat', description: 'desc1', price: 20.2 },
+    { name: 'name5', category: 'cat', description: 'desc1', price: 20.2 },
+    { name: 'name6', category: 'cat', description: 'desc1', price: 20.2 },
+    { name: 'name7', category: 'cat', description: 'desc1', price: 20.2 },
+    { name: 'name8', category: 'cat', description: 'desc1', price: 20.2 },
+    { name: 'name9', category: 'cat', description: 'desc1', price: 20.2 },
+    { name: 'name1', category: 'cat', description: 'desc1', price: 20.2 },
+    { name: 'name1', category: 'cat', description: 'desc1', price: 20.2 },
+    { name: 'name1', category: 'cat', description: 'desc1', price: 20.2 },
+    { name: 'name1', category: 'cat', description: 'desc1', price: 20.2 },
+    { name: 'name1', category: 'cat', description: 'desc1', price: 20.2 },
+    { name: 'name1', category: 'cat', description: 'desc1', price: 20.2 },
+    { name: 'name1', category: 'cat', description: 'desc1', price: 20.2 },
+    { name: 'name1', category: 'cat', description: 'desc1', price: 20.2 },
+    { name: 'name1', category: 'cat', description: 'desc1', price: 20.2 },
+    { name: 'name1', category: 'cat', description: 'desc1', price: 20.2 },
+    { name: 'name1', category: 'cat', description: 'desc1', price: 20.2 },
   ];
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private basketService: BasketService) {
     //
   }
 
@@ -44,6 +45,7 @@ export class PurchaseComponent implements OnInit {
   }
 
   addProductToBasket(product: Product) {
-    this.basket = [...this.basket, product];
+    this.basketService.addProductToBasket(product);
+    console.log('added');
   }
 }

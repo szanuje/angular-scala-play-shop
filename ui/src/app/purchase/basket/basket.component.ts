@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { BasketService } from 'src/app/shared/services/basket-service';
+import { BasketProduct } from 'src/app/_model/basket';
 import { Product } from '../../_model/product';
 
 @Component({
@@ -10,13 +12,19 @@ import { Product } from '../../_model/product';
 export class BasketComponent implements OnInit {
   path: string = '/checkout';
 
-  @Input() basket: Product[] = [];
+  basket: BasketProduct = {};
+  basketSize: number = 0;
 
-  constructor(router: Router) {
+  constructor(router: Router, private basketService: BasketService) {
     //
   }
 
   ngOnInit(): void {
+    this.basket = this.getBasketProducts();
     //
+  }
+
+  getBasketProducts(): BasketProduct {
+    return this.basketService.getBasketProducts();
   }
 }

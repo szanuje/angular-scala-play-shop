@@ -1,0 +1,22 @@
+.basket-product-name {
+    width: 150px;
+    margin: 0 auto 0 0;
+    overflow-wrap: break-word;
+}
+
+.basket-product-quantity {
+    width: 30px;
+    opacity: 0.5;
+}
+
+.basket-product-total-price {
+    width: 60px;
+}
+
+.basket-product-total-price {
+    text-align: end;
+}
+
+.checkout-button {
+    margin-left: 16px;
+}

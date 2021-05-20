@@ -91,6 +91,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatExpansionModule,
     MatCardModule,
     MatMenuModule,
+    BrowserAnimationsModule
   ],
   providers: [MatDatepickerModule],
 })
