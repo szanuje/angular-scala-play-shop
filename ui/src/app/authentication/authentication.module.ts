@@ -6,24 +6,19 @@ import { RegisterButtonComponent } from './register-button/register-button.compo
 import { LogoutButtonComponent } from './logout-button/logout-button.component';
 import { AuthenticationComponent } from './authentication.component';
 
-
-
 @NgModule({
   declarations: [
     LoginButtonComponent,
     RegisterButtonComponent,
     LogoutButtonComponent,
-    AuthenticationComponent
+    AuthenticationComponent,
   ],
-  imports: [
-    CommonModule,
-    AngularMaterialModule
-  ],
+  imports: [CommonModule, AngularMaterialModule],
   exports: [
     LoginButtonComponent,
     RegisterButtonComponent,
     LogoutButtonComponent,
-    AuthenticationComponent
-  ]
+    AuthenticationComponent,
+  ],
 })
-export class AuthenticationModule { }
+export class AuthenticationModule {}

@@ -17,7 +17,7 @@
             <mat-grid-tile class="product" *ngFor="
           let product of products
             | slice
-              : currentPageSize * (currentPageIndex)
+              : currentPageSize * currentPageIndex
               : currentPageSize * (currentPageIndex + 1);
           index as i
         " [id]="selectedProductHtmlIdPrefix + i" (click)="selectProduct(product, i)">
@@ -31,8 +31,8 @@
         <mat-toolbar class="paginator">
             <mat-toolbar-row>
                 <button class="add-to-basket" mat-raised-button color="primary" [disabled]="!isProductSelected" (click)="addProductToBasket(selectedProduct)">
-          Add to basket
-        </button>
+                    Add to basket
+                </button>
                 <mat-paginator [length]="products.length" [pageSize]="currentPageSize" [pageSizeOptions]="pageSizes" (page)="onPaginateChange($event)"></mat-paginator>
             </mat-toolbar-row>
         </mat-toolbar>

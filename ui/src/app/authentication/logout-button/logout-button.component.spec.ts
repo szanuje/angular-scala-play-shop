@@ -8,9 +8,8 @@ describe('LogoutButtonComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LogoutButtonComponent ]
-    })
-    .compileComponents();
+      declarations: [LogoutButtonComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

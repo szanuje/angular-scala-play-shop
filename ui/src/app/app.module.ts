@@ -20,7 +20,7 @@ import { CheckoutComponent } from './checkout/checkout.component';
     HomeComponent,
     LoginComponent,
     MenuComponent,
-    CheckoutComponent
+    CheckoutComponent,
   ],
   imports: [
     CommonModule,
@@ -34,6 +34,6 @@ import { CheckoutComponent } from './checkout/checkout.component';
     }),
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

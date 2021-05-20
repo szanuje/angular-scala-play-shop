@@ -7,20 +7,8 @@ import { AngularMaterialModule } from '../material.module';
 import { RouterModule } from '@angular/router';
 
 @NgModule({
-  declarations: [
-    PurchaseComponent,
-    BasketComponent,
-    ProductsComponent
-  ],
-  imports: [
-    CommonModule,
-    AngularMaterialModule,
-    RouterModule
-  ],
-  exports: [
-    PurchaseComponent,
-    BasketComponent,
-    ProductsComponent
-  ]
+  declarations: [PurchaseComponent, BasketComponent, ProductsComponent],
+  imports: [CommonModule, AngularMaterialModule, RouterModule],
+  exports: [PurchaseComponent, BasketComponent, ProductsComponent],
 })
-export class PurchaseModule { }
+export class PurchaseModule {}

@@ -7,7 +7,6 @@ import { Product } from '../../_model/product';
   styleUrls: ['./products.component.scss'],
 })
 export class ProductsComponent implements OnInit {
-
   @Output() addProductToBasketEvent = new EventEmitter<Product>();
   @Input() products: Product[] = [];
 
@@ -23,11 +22,11 @@ export class ProductsComponent implements OnInit {
   currentPageIndex: number = 0;
 
   constructor() {
-  //
+    //
   }
 
   ngOnInit(): void {
-  //
+    //
   }
 
   onPaginateChange(event: any) {
@@ -38,12 +37,12 @@ export class ProductsComponent implements OnInit {
   }
 
   rebuildPage(pageIndex: number, pageSize: number) {
-    if(pageSize === 6) this.numberOfColumns = 2;
-    if(pageSize === 12) this.numberOfColumns = 3;
+    if (pageSize === 6) this.numberOfColumns = 2;
+    if (pageSize === 12) this.numberOfColumns = 3;
   }
 
   addProductToBasket(product: Product | null) {
-    if(product !== null) {
+    if (product !== null) {
       this.addProductToBasketEvent.emit(product);
       this.removeSelection();
     }
@@ -57,17 +56,15 @@ export class ProductsComponent implements OnInit {
 
   removeSelection() {
     document
-    .getElementById(this.selectedProductHtmlId)
-    ?.classList.remove('selected-product');
+      .getElementById(this.selectedProductHtmlId)
+      ?.classList.remove('selected-product');
     this.isProductSelected = false;
     this.selectedProduct = null;
   }
 
   addSelection(productId: string, newProduct: Product) {
-    document
-      .getElementById(productId)
-      ?.classList.add('selected-product');
-      this.isProductSelected = true;
+    document.getElementById(productId)?.classList.add('selected-product');
+    this.isProductSelected = true;
     this.selectedProductHtmlId = productId;
     this.selectedProduct = newProduct;
   }
