@@ -16,3 +16,7 @@ libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "5.0.0
 // Adds additional packages into conf/routes
 // play.sbt.routes.RoutesKeys.routesImport += "com.maksple.binders._"
 libraryDependencies += "org.mongodb.scala" %% "mongo-scala-driver" % "2.8.0"
+
+// https://mvnrepository.com/artifact/org.reactivemongo/play2-reactivemongo
+libraryDependencies += "org.reactivemongo" %% "play2-reactivemongo" % "1.0.0-play27"
+libraryDependencies += "org.reactivemongo" % "reactivemongo-play-json_2.13" % "0.20.13-play27"

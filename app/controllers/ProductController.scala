@@ -1,7 +1,6 @@
 package controllers
 
 import models.Product
-import org.mongodb.scala.bson.Document
 import play.api.libs.json.{Json, OWrites, Reads}
 import play.api.mvc.{AbstractController, Action, AnyContent, ControllerComponents}
 import services.ProductService
@@ -18,10 +17,7 @@ class ProductController @Inject()(cc: ControllerComponents, productService: Prod
 
   def getProducts: Action[AnyContent] = Action.async { implicit request => {
     productService.findAll()
-      .map(res => {
-        println("getBooks: " + res)
-        Ok(jsonizeDocs(res.toList))
-      })
+      .map(res => Ok(Json.toJson(res)))
       .recover(th => BadRequest(th.getMessage))
   }
   }
@@ -35,7 +31,7 @@ class ProductController @Inject()(cc: ControllerComponents, productService: Prod
     println("query by " + key + ":" + value)
     productService.findBy(key, value)
       .map(res => {
-        Ok(jsonizeDocs(res.toList))
+        Ok(Json.toJson(res))
       })
       .recover(th => BadRequest(th.getMessage))
   }
@@ -48,30 +44,5 @@ class ProductController @Inject()(cc: ControllerComponents, productService: Prod
     Future.successful(Created)
   }
   }
-  //
-  //  def updateProduct(id: UUID): Action[Product] = Action.async(parse.json[Product]) { implicit request => {
-  //    val product = request.body
-  //    println("updateProduct: " + product)
-  //    mongoService.update(id, product)
-  //    Future.successful(Created)
-  //  }
-  //  }
-  //
-  //  def deleteProduct(id: UUID): Action[AnyContent] = Action.async { implicit request => {
-  //    println("deleteProduct(" + id + ")")
-  //    mongoService.delete(id)
-  //    Future.successful(NoContent)
-  //  }
-  //  }
 
-  def jsonizeDocs(cDocument: Seq[Document]): String = {
-    val sb = new StringBuilder
-    for (doc <- cDocument) {
-      if (sb.nonEmpty) {
-        sb.append(",")
-      }
-      sb.append(doc.toJson())
-    }
-    sb.toString
-  }
 }

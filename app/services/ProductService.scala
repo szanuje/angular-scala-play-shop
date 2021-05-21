@@ -1,46 +1,60 @@
 package services
 
-import org.mongodb.scala._
-import org.mongodb.scala.bson.Document
-import org.mongodb.scala.model.Filters
+import models.Product
 import play.api.Configuration
+import reactivemongo.api.MongoConnection.ParsedURI
+import reactivemongo.api.bson.collection.BSONCollection
+import reactivemongo.api.bson.{BSONDocument, BSONDocumentReader, BSONDocumentWriter, Macros}
+import reactivemongo.api.{AsyncDriver, Cursor, DB, MongoConnection}
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class ProductService @Inject()(implicit ec: ExecutionContext, config: Configuration) {
+  val MONGO_URL: String = config.underlying.getString("mongodb.uri")
 
-  val host = config.underlying.getString("MONGO_H")
-  val MONGO_URL = "mongodb://" + host + ":27017"
+  val mongoDriver: AsyncDriver = AsyncDriver()
+  lazy val parsedURIFuture: Future[ParsedURI] = MongoConnection.fromString(MONGO_URL)
+  lazy val connection: Future[MongoConnection] = parsedURIFuture.flatMap(u => mongoDriver.connect(u))
+  val db: Future[DB] = connection.flatMap(_.database("shop"))
+  val products: Future[BSONCollection] = db.map(_.collection("products"))
 
-  def findAll(): Future[Seq[Document]] = {
-    println(host)
-    val mongoClient: MongoClient = MongoClient(MONGO_URL)
-    val database: MongoDatabase = mongoClient.getDatabase("shop")
-    val collection: MongoCollection[Document] = database.getCollection("products")
-    collection.find().toFuture()
+  implicit def moviesWriter: BSONDocumentWriter[models.Product] = Macros.writer[models.Product]
+
+  implicit def moviesReader: BSONDocumentReader[models.Product] = Macros.reader[models.Product]
+
+  def insert(product: models.Product): Future[Any] = {
+    products.flatMap { col =>
+      val updateBuilder = col.update(true)
+      val updates = updateBuilder.element(
+        q = BSONDocument("name" -> product.getName),
+        u = BSONDocument("$set" -> BSONDocument(
+          "name" -> product.getName,
+          "category" -> product.getCategory,
+          "description" -> product.getDescription,
+          "price" -> product.getPrice
+        )),
+        multi = true,
+        upsert = true
+      )
+      updates.flatMap(updateEle => updateBuilder.many(Seq(updateEle)))
+    }
   }
 
-  def findBy(property: String, queryString: String): Future[Seq[Document]] = {
-    val mongoClient: MongoClient = MongoClient(MONGO_URL)
-    val database: MongoDatabase = mongoClient.getDatabase("shop")
-    val collection: MongoCollection[Document] = database.getCollection("products")
-    collection.find(Filters.eq(property, queryString)).toFuture()
+  def findAll(): Future[List[Product]] = {
+    println(MONGO_URL)
+    products
+      .flatMap(_.find(BSONDocument()).cursor[Product]()
+        .collect(err = Cursor.FailOnError[List[Product]]()))
   }
 
-  def insert(product: models.Product): Unit = {
-    val mongoClient: MongoClient = MongoClient(MONGO_URL)
-    val database: MongoDatabase = mongoClient.getDatabase("shop")
-    val collection: MongoCollection[Document] = database.getCollection("products")
-    val doc: Document = Document(
-      "name" -> product.getName,
-      "category" -> product.getCategory,
-      "description" -> product.getDescription
-    )
-    collection
-      .insertOne(doc)
-      .toFuture()
+  def findBy(property: String, queryString: String): Future[List[Product]] = {
+    products
+      .flatMap(_.find(BSONDocument(
+        property -> queryString
+      )).cursor[Product]()
+        .collect(err = Cursor.FailOnError[List[Product]]()))
   }
 
 }
