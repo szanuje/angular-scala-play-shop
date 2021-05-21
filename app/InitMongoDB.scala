@@ -7,7 +7,6 @@ import scala.concurrent.Future;
 
 @Singleton
 class InitMongoDB @Inject()(lifecycle: ApplicationLifecycle, productService: ProductService) {
-  println("xd")
   productService.insert(models.Product("name1", "category1", "description1", 49.99f))
   productService.insert(models.Product("name2", "category1", "description2", 49.99f))
   productService.insert(models.Product("name3", "category1", "description3", 49.99f))

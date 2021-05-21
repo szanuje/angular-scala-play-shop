@@ -8,15 +8,21 @@ services:
       - "27017:27017"
   my-server:
     container_name: 'my-server'
-    #    build: .
     image: mjudnauszy/scala-play-angular-shop_my-server:latest
     environment:
       - MONGO_HOST=my-mongo
     depends_on:
       - my-mongo
     ports:
-      - "4200:4200"
       - "9000:9000"
     expose:
-      - "4200"
       - "9000"
+  my-client:
+    container_name: 'my-client'
+    image: mjudnauszy/scala-play-angular-shop_my-client:latest
+    depends_on:
+      - my-server
+    ports:
+      - "8080:4200"
+    expose:
+      - "4200"
