@@ -12,11 +12,11 @@ import scala.concurrent.Future
 @Singleton
 class ProductController @Inject()(cc: ControllerComponents, productService: ProductService) extends AbstractController(cc) {
 
-  implicit val phoneWrites: OWrites[Product] = Json.writes[Product]
-  implicit val phoneReads: Reads[Product] = Json.reads[Product]
+  implicit val productWrites: OWrites[Product] = Json.writes[Product]
+  implicit val productReads: Reads[Product] = Json.reads[Product]
 
   def getProducts: Action[AnyContent] = Action.async { implicit request => {
-    productService.findAll()
+    productService.findAllProducts()
       .map(res => Ok(Json.toJson(res)))
       .recover(th => BadRequest(th.getMessage))
   }
@@ -29,7 +29,7 @@ class ProductController @Inject()(cc: ControllerComponents, productService: Prod
     val key = vals(0)
     val value = vals(1)
     println("query by " + key + ":" + value)
-    productService.findBy(key, value)
+    productService.findProductBy(key, value)
       .map(res => {
         Ok(Json.toJson(res))
       })
@@ -40,7 +40,7 @@ class ProductController @Inject()(cc: ControllerComponents, productService: Prod
   def addProduct(): Action[Product] = Action.async(parse.json[Product]) { implicit request => {
     val product = request.body
     println("addProduct: " + product)
-    productService.insert(product)
+    productService.createProduct(product)
     Future.successful(Created)
   }
   }

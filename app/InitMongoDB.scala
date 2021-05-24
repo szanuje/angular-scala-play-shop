@@ -1,20 +1,43 @@
+import models._
 import play.api.inject.ApplicationLifecycle
-import services.ProductService
+import services._
 
 import javax.inject.{Inject, Singleton}
-import scala.concurrent.Future;
+import scala.concurrent.Future
 
 
 @Singleton
-class InitMongoDB @Inject()(lifecycle: ApplicationLifecycle, productService: ProductService) {
-  productService.insert(models.Product("name1", "category1", "description1", 49.99f))
-  productService.insert(models.Product("name2", "category1", "description2", 49.99f))
-  productService.insert(models.Product("name3", "category1", "description3", 49.99f))
-  productService.insert(models.Product("name4", "category1", "description4", 49.99f))
-  productService.insert(models.Product("name5", "category2", "description5", 49.99f))
-  productService.insert(models.Product("name6", "category3", "description6", 49.99f))
-  productService.insert(models.Product("name7", "category4", "description7", 49.99f))
-  productService.insert(models.Product("name8", "category4", "description8", 49.99f))
+class InitMongoDB @Inject()(lifecycle: ApplicationLifecycle, clientService: ClientService) {
+
+  clientService.createClient(Client(
+    User("user2", "pass1", "user1@gmail.com"),
+    UserDetails("address1", "city1", "country1", "00-00", "9999999999"),
+    UserBasket(
+      List(
+        BasketProduct(
+          Product("name1", "category1", "description1", 49.99f),
+          2,
+          99.98f
+        )
+      ),
+      99.9f
+    )
+  ))
+
+  clientService.createClient(Client(
+    User("user1", "pass1", "user1@gmail.com"),
+    UserDetails("address1", "city1", "country1", "00-00", "9999999999"),
+    UserBasket(
+      List(
+        BasketProduct(
+          Product("name1", "category1", "description1", 49.99f),
+          2,
+          99.98f
+        )
+      ),
+      99.9f
+    )
+  ))
 
   lifecycle.addStopHook { () =>
     println("stop")

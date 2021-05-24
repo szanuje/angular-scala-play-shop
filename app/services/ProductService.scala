@@ -1,31 +1,22 @@
 package services
 
 import models.Product
-import play.api.Configuration
-import reactivemongo.api.MongoConnection.ParsedURI
-import reactivemongo.api.bson.collection.BSONCollection
+import reactivemongo.api.Cursor
 import reactivemongo.api.bson.{BSONDocument, BSONDocumentReader, BSONDocumentWriter, Macros}
-import reactivemongo.api.{AsyncDriver, Cursor, DB, MongoConnection}
+import repository.MongoRepository
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class ProductService @Inject()(implicit ec: ExecutionContext, config: Configuration) {
-  val MONGO_URL: String = config.underlying.getString("mongodb.uri")
+class ProductService @Inject()(implicit ec: ExecutionContext, mongoRepository: MongoRepository) {
 
-  val mongoDriver: AsyncDriver = AsyncDriver()
-  lazy val parsedURIFuture: Future[ParsedURI] = MongoConnection.fromString(MONGO_URL)
-  lazy val connection: Future[MongoConnection] = parsedURIFuture.flatMap(u => mongoDriver.connect(u))
-  val db: Future[DB] = connection.flatMap(_.database("shop"))
-  val products: Future[BSONCollection] = db.map(_.collection("products"))
+  implicit def productWriter: BSONDocumentWriter[Product] = Macros.writer[Product]
 
-  implicit def moviesWriter: BSONDocumentWriter[models.Product] = Macros.writer[models.Product]
+  implicit def productReader: BSONDocumentReader[Product] = Macros.reader[Product]
 
-  implicit def moviesReader: BSONDocumentReader[models.Product] = Macros.reader[models.Product]
-
-  def insert(product: models.Product): Future[Any] = {
-    products.flatMap { col =>
+  def createProduct(product: Product): Future[Any] = {
+    mongoRepository.productsCollection.flatMap { col =>
       val updateBuilder = col.update(true)
       val updates = updateBuilder.element(
         q = BSONDocument("name" -> product.getName),
@@ -42,19 +33,20 @@ class ProductService @Inject()(implicit ec: ExecutionContext, config: Configurat
     }
   }
 
-  def findAll(): Future[List[Product]] = {
-    println(MONGO_URL)
-    products
-      .flatMap(_.find(BSONDocument()).cursor[Product]()
-        .collect(err = Cursor.FailOnError[List[Product]]()))
+  def findAllProducts(): Future[List[Product]] = {
+    mongoRepository.productsCollection
+      .flatMap(_
+        .find(BSONDocument())
+        .cursor[Product]()
+        .collect(err = Cursor.FailOnError[List[Product]]())
+      )
   }
 
-  def findBy(property: String, queryString: String): Future[List[Product]] = {
-    products
+  def findProductBy(property: String, queryString: String): Future[List[Product]] = {
+    mongoRepository.productsCollection
       .flatMap(_.find(BSONDocument(
         property -> queryString
       )).cursor[Product]()
         .collect(err = Cursor.FailOnError[List[Product]]()))
   }
-
 }
