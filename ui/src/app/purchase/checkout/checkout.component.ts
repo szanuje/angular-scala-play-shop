@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import {
   animate,
   state,
@@ -7,9 +6,10 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
-import { BasketProduct } from '../../_model/basket';
 import { BasketService } from 'src/app/shared/services/basket-service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { BasketProduct } from 'src/app/_model/BasketProduct';
+import { UserBasket } from 'src/app/_model/UserBasket';
 
 @Component({
   selector: 'app-checkout',
@@ -27,28 +27,35 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   ],
 })
 export class CheckoutComponent implements OnInit {
-  basket: BasketProduct = {};
+  basket: UserBasket;
   columnsToDisplay = ['name', 'category', 'quantity', 'price'];
   expandedElement: BasketProduct | null = null;
-  totalPrice: number = 0;
 
-  constructor(private router: Router, private basketService: BasketService, private _snackBar: MatSnackBar) {}
-  
+  constructor(
+    private basketService: BasketService,
+    private _snackBar: MatSnackBar
+  ) {
+    this.basket = basketService.getBasket();
+  }
+
   ngOnInit(): void {
-    this.basket = this.getBasketProducts();
-    this.totalPrice = this.getBasketValue();
+    this.initBasket();
   }
 
-  getBasketProducts(): BasketProduct {
-    return this.basketService.getBasketProducts();
+  initBasket() {
+    return this.basketService.getBasketObservable().subscribe((b) => (this.basket = b));
   }
 
-  getBasketValue(): number {
-    let totalPrice = 0
-    for(const [key, val] of Object.entries(this.basket)) {
-      totalPrice += val.totalPrice;
-    }
-    return +totalPrice.toFixed(2);
+  getBasketProducts() {
+    return this.basket.getBasketProducts();
+  }
+
+  getBasketSize() {
+    return this.basket.getBasketProducts().length;
+  }
+
+  getBasketValue() {
+    return this.basket.getTotalPrice();
   }
 
   openSnackBar() {

@@ -6,24 +6,17 @@ import { ProductsComponent } from './products/products.component';
 import { AngularMaterialModule } from '../material.module';
 import { RouterModule } from '@angular/router';
 import { CheckoutComponent } from './checkout/checkout.component';
+import { BasketService } from '../shared/services/basket-service';
 
 @NgModule({
   declarations: [
     PurchaseComponent,
     BasketComponent,
     ProductsComponent,
-    CheckoutComponent
+    CheckoutComponent,
   ],
-  imports: [
-    CommonModule,
-    AngularMaterialModule,
-    RouterModule
-  ],
-  exports: [
-    PurchaseComponent,
-    BasketComponent,
-    ProductsComponent,
-    CheckoutComponent
-  ]
+  imports: [CommonModule, AngularMaterialModule, RouterModule],
+  exports: [PurchaseComponent, CheckoutComponent],
+  providers: [],
 })
-export class PurchaseModule { }
+export class PurchaseModule {}

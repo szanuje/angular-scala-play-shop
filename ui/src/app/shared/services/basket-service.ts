@@ -1,35 +1,37 @@
-import { BasketProduct } from "src/app/_model/basket";
-import { Product } from "src/app/_model/product";
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
+import { Product } from 'src/app/_model/Product';
+import { UserBasket } from 'src/app/_model/UserBasket';
 
+@Injectable({
+  providedIn: 'root',
+})
 export class BasketService {
-    basket: BasketProduct = {};
-    basketSize: number = 0;
+  private basket: UserBasket;
+  private basketObservable: Subject<UserBasket>;
 
-    constructor() {
-        //
-    }
+  constructor(private http: HttpClient) {
+    this.basket = new UserBasket();
+    this.basketObservable = new Subject<UserBasket>();
+    this.basketObservable.next(this.basket);
+    //
+  }
 
-    addProductToBasket(product: Product): void {
-        if (this.basket[product.name]) {
-          let newPrice = this.basket[product.name].totalPrice + product.price;
-          this.basket[product.name].quantity++;
-          this.basket[product.name].totalPrice = +newPrice.toFixed(2);
-        } else {
-          this.basket[product.name] = {
-            product: product,
-            quantity: 1,
-            totalPrice: +product.price.toFixed(2)
-          }
-        }
-        this.basketSize++;
-      }
+  addProductToBasket(product: Product) {
+    this.basket.addProductToBasket(product);
+    this.basketObservable.next(this.basket);
+  }
 
-    getBasketProducts(): BasketProduct {
-        return this.basket;
-    }
+  getBasketObservable() {
+    return this.basketObservable;
+  }
 
+  getBasket() {
+    return this.basket;
+  }
 
-    getBasketSize(): number {
-        return this.basketSize;
-    }
+  fetchBasket() {
+    this.http.get('localhost:9000/api/users/user1/basket');
+  }
 }

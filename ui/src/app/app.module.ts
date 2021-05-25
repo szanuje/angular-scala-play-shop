@@ -11,6 +11,8 @@ import { PurchaseModule } from './purchase/purchase.module';
 import { CommonModule } from '@angular/common';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { BasketService } from './shared/services/basket-service';
+import { ProductService } from './shared/services/product-service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -24,11 +26,12 @@ import { BasketService } from './shared/services/basket-service';
     AngularMaterialModule,
     PurchaseModule,
     AuthenticationModule,
+    HttpClientModule,
     AuthModule.forRoot({
       ...env.auth,
     })
   ],
-  providers: [BasketService],
+  providers: [BasketService, ProductService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

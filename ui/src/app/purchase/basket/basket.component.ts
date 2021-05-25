@@ -1,8 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BasketService } from 'src/app/shared/services/basket-service';
-import { BasketProduct } from 'src/app/_model/basket';
-import { Product } from '../../_model/product';
+import { UserBasket } from 'src/app/_model/UserBasket';
 
 @Component({
   selector: 'app-basket',
@@ -10,21 +9,31 @@ import { Product } from '../../_model/product';
   styleUrls: ['./basket.component.scss'],
 })
 export class BasketComponent implements OnInit {
-  path: string = '/checkout';
+  checkoutRedirectPath: string = '/checkout';
 
-  basket: BasketProduct = {};
-  basketSize: number = 0;
+  basket: UserBasket;
 
   constructor(router: Router, private basketService: BasketService) {
-    //
+    this.basket = basketService.getBasket();
   }
 
   ngOnInit(): void {
-    this.basket = this.getBasketProducts();
-    //
+    this.initBasket();
   }
 
-  getBasketProducts(): BasketProduct {
-    return this.basketService.getBasketProducts();
+  initBasket() {
+    return this.basketService.getBasketObservable().subscribe((b) => (this.basket = b));
+  }
+
+  getBasketProducts() {
+    return this.basket.getBasketProducts();
+  }
+
+  getBasketSize() {
+    return this.basket.getBasketProducts().length;
+  }
+
+  getBasketValue() {
+    return this.basket.getTotalPrice();
   }
 }
