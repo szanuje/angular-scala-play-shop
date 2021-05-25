@@ -14,7 +14,16 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": ""
+							"raw": "localhost:9000/api/clients/all",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"api",
+								"clients",
+								"all"
+							]
 						}
 					},
 					"response": []
@@ -27,11 +36,33 @@
 			"item": [
 				{
 					"name": "get all",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"method": "GET",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": ""
+							"raw": "http://localhost:9000/api/products/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"api",
+								"products",
+								"all"
+							]
 						}
 					},
 					"response": []
@@ -39,10 +70,27 @@
 				{
 					"name": "post product",
 					"request": {
-						"method": "GET",
+						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\": \"name111\", \"category\": \"cetegory111\", \"description\": \"1111111111111111\", \"price\": 19.99}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": ""
+							"raw": "localhost:9000/api/products",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"api",
+								"products"
+							]
 						}
 					},
 					"response": []
@@ -53,7 +101,21 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": ""
+							"raw": "localhost:9000/api/products?name=name1",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"api",
+								"products"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "name1"
+								}
+							]
 						}
 					},
 					"response": []
@@ -66,11 +128,27 @@
 			"item": [
 				{
 					"name": "get user",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": {
+						"body": {
+							"mode": "raw",
 							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:9000/api/users/user1",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"api",
+								"users",
+								"user1"
+							]
 						}
 					},
 					"response": []
@@ -78,10 +156,28 @@
 				{
 					"name": "put user",
 					"request": {
-						"method": "GET",
+						"method": "PUT",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"user3\",\n    \"password\": \"pass3\",\n    \"email\": \"user3@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": ""
+							"raw": "localhost:9000/api/users/user2",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"api",
+								"users",
+								"user2"
+							]
 						}
 					},
 					"response": []
@@ -89,10 +185,27 @@
 				{
 					"name": "post user",
 					"request": {
-						"method": "GET",
+						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"user3\",\n    \"password\": \"pass3\",\n    \"email\": \"user3@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": ""
+							"raw": "localhost:9000/api/users",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"api",
+								"users"
+							]
 						}
 					},
 					"response": []
@@ -109,7 +222,17 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": ""
+							"raw": "localhost:9000/api/users/user1/details",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"api",
+								"users",
+								"user1",
+								"details"
+							]
 						}
 					},
 					"response": []
@@ -117,10 +240,29 @@
 				{
 					"name": "put user details",
 					"request": {
-						"method": "GET",
+						"method": "PUT",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"user1\",\n    \"address\": \"address1111111111\",\n    \"city\": \"city1\",\n    \"country\": \"country1\",\n    \"postalCode\": \"00-00\",\n    \"phone\": \"9999999999\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": ""
+							"raw": "localhost:9000/api/users/user1/details",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"api",
+								"users",
+								"user1",
+								"details"
+							]
 						}
 					},
 					"response": []
@@ -137,7 +279,17 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": ""
+							"raw": "localhost:9000/api/users/user1/basket",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"api",
+								"users",
+								"user1",
+								"basket"
+							]
 						}
 					},
 					"response": []
@@ -145,10 +297,29 @@
 				{
 					"name": "put user basket",
 					"request": {
-						"method": "GET",
+						"method": "PUT",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"basketProducts\": [\n        {\n            \"product\": {\n                \"name\": \"name1\",\n                \"category\": \"category1\",\n                \"description\": \"description1\",\n                \"price\": 49.9900016784668\n            },\n            \"quantity\": 2,\n            \"totalPrice\": 99.9800033569336\n        },\n        {\n            \"product\": {\n                \"name\": \"name2\",\n                \"category\": \"category2\",\n                \"description\": \"description2\",\n                \"price\": 49.9900016784668\n            },\n            \"quantity\": 2,\n            \"totalPrice\": 99.9800033569336\n        }\n    ],\n    \"totalPrice\": 99.9000015258789\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": ""
+							"raw": "localhost:9000/api/users/user1/basket",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"api",
+								"users",
+								"user1",
+								"basket"
+							]
 						}
 					},
 					"response": []
@@ -156,10 +327,29 @@
 				{
 					"name": "delete user basket",
 					"request": {
-						"method": "GET",
+						"method": "DELETE",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": ""
+							"raw": "localhost:9000/api/users/user1/basket",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"api",
+								"users",
+								"user1",
+								"basket"
+							]
 						}
 					},
 					"response": []
