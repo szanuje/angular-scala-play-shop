@@ -10,7 +10,8 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 @Singleton
-class ProductController @Inject()(cc: ControllerComponents, productService: ProductService) extends AbstractController(cc) {
+class ProductController @Inject()(cc: ControllerComponents, productService: ProductService)
+  extends AbstractController(cc) {
 
   implicit val productWrites: OWrites[Product] = Json.writes[Product]
   implicit val productReads: Reads[Product] = Json.reads[Product]

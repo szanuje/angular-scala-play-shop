@@ -5,17 +5,16 @@
 GET     /                        controllers.FrontendController.index()
 
 # test
-GET     /api/ping                controllers.ApiController.ping
+GET     /api/ping                controllers.HealthCheckController.ping
+
+# authentication
+POST    /api/register            controllers.SignUpController.signUp()
+POST    /api/login               controllers.SignInController.signIn()
 
 # product
 GET     /api/products/all        controllers.ProductController.getProducts
 GET     /api/products            controllers.ProductController.getProductsBy(queryString: Option[String])
 POST    /api/products            controllers.ProductController.addProduct()
-
-# user
-GET     /api/users/:name         controllers.UserController.getUser(name: String)
-POST    /api/users               controllers.UserController.postUser()
-PUT     /api/users/:name         controllers.UserController.putUser(name: String)
 
 # user details
 GET     /api/users/:name/details controllers.UserDetailsController.getUserDetails(name: String)
@@ -25,10 +24,6 @@ PUT     /api/users/:name/details controllers.UserDetailsController.putUserDetail
 GET     /api/users/:name/basket  controllers.UserBasketController.getUserBasket(name: String)
 PUT     /api/users/:name/basket  controllers.UserBasketController.putUserBasket(name: String)
 DELETE  /api/users/:name/basket  controllers.UserBasketController.deleteUserBasket(name: String)
-
-# client
-POST    /api/clients             controllers.ClientController.addClient()
-GET     /api/clients/all         controllers.ClientController.getAllClients()
 
 # Serve static assets under public directory
 GET /*file controllers.FrontendController.assetOrDefault(file)

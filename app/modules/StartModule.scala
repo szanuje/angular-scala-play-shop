@@ -1,9 +1,10 @@
+package modules
+
 import com.google.inject.AbstractModule
-//import services.ProductService
+import utils.InitMongoDB
 
 class StartModule extends AbstractModule {
   override def configure() = {
     bind(classOf[InitMongoDB]).asEagerSingleton()
-    // bind(classOf[ProductService]).asEagerSingleton()
   }
 }
