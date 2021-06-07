@@ -4,6 +4,7 @@ import com.mohiva.play.silhouette.api.LoginInfo
 import models.{Client, User, UserBasket, UserDetails}
 import play.api.Configuration
 import reactivemongo.api.bson.BSONDocument
+import reactivemongo.api.commands.WriteResult
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
@@ -12,7 +13,7 @@ import scala.concurrent.{ExecutionContext, Future}
 class UserRepository @Inject()(implicit ec: ExecutionContext, config: Configuration)
   extends AbstractMongoRepository {
 
-  def createUser(user: User): Unit = {
+  def createUser(user: User): Future[WriteResult] = {
     clientsCollection.flatMap { col =>
       col.insert.one(
         BSONDocument(

@@ -5,6 +5,8 @@ import { AngularMaterialModule } from '../material.module';
 import { RegisterButtonComponent } from './register-button/register-button.component';
 import { LogoutButtonComponent } from './logout-button/logout-button.component';
 import { AuthenticationComponent } from './authentication.component';
+import { LoginPageComponent } from './login-page/login-page.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -12,13 +14,15 @@ import { AuthenticationComponent } from './authentication.component';
     RegisterButtonComponent,
     LogoutButtonComponent,
     AuthenticationComponent,
+    LoginPageComponent
   ],
-  imports: [CommonModule, AngularMaterialModule],
+  imports: [CommonModule, AngularMaterialModule, RouterModule],
   exports: [
     LoginButtonComponent,
     RegisterButtonComponent,
     LogoutButtonComponent,
     AuthenticationComponent,
+    LoginPageComponent
   ],
 })
 export class AuthenticationModule {}

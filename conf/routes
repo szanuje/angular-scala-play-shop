@@ -10,6 +10,7 @@ GET     /api/ping                controllers.HealthCheckController.ping
 # authentication
 POST    /api/register            controllers.SignUpController.signUp()
 POST    /api/login               controllers.SignInController.signIn()
+GET     /authenticate/:provider  controllers.SocialAuthController.authenticate(provider: String)
 
 # product
 GET     /api/products/all        controllers.ProductController.getProducts

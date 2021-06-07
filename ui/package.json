@@ -29,6 +29,7 @@
         "@auth0/auth0-angular": "^1.5.0",
         "https": "^1.0.0",
         "https-localhost": "^4.6.5",
+        "ngx-cookie-service": "^12.0.0",
         "rxjs": "~6.6.0",
         "tslib": "^2.0.0",
         "zone.js": "~0.11.3"

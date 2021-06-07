@@ -1,0 +1,79 @@
+<mat-tab-group dynamicHeight>
+    <mat-tab label="Login">
+        <div class="example-small-box mat-elevation-z4">
+
+
+            <form class="example-form" [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Username</mat-label>
+                    <input type="text" matInput [formControl]="usernameFormControl" [errorStateMatcher]="matcher" name="username" formControlName="username">
+                    <mat-error *ngIf="!usernameFormControl.hasError('required')">
+                        Please enter username
+                    </mat-error>
+                    <mat-error *ngIf="usernameFormControl.hasError('required')">
+                        Username is <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="example-full-width">
+                    <mat-label>Password</mat-label>
+                    <input type="password" matInput name="password" formControlName="password">
+                </mat-form-field>
+
+                <button class="login-button" mat-raised-button color="primary" type="submit">
+                    Login
+                </button>
+
+                <button mat-button style="padding: 1rem;">
+                    <img src="../../assets/images/Google.svg">
+                    Login With Google
+                </button>
+            </form>
+
+
+        </div>
+    </mat-tab>
+    <mat-tab label="Register">
+        <div class="example-large-box mat-elevation-z4">
+
+            <form class="example-form">
+
+                <mat-form-field class="example-full-width">
+                    <mat-label>Username</mat-label>
+                    <input type="text" matInput [formControl]="usernameFormControl" [errorStateMatcher]="matcher">
+                    <mat-error *ngIf="!usernameFormControl.hasError('required')">
+                        Please enter username
+                    </mat-error>
+                    <mat-error *ngIf="usernameFormControl.hasError('required')">
+                        Username is <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="example-full-width">
+                    <mat-label>Pasword</mat-label>
+                    <input type="password" matInput [formControl]="passwordFormControl" [errorStateMatcher]="matcher">
+                    <mat-error *ngIf="!passwordFormControl.hasError('required')">
+                        Please enter password
+                    </mat-error>
+                    <mat-error *ngIf="passwordFormControl.hasError('required')">
+                        Password is <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
+
+
+                <mat-form-field class="example-full-width">
+                    <mat-label>Email</mat-label>
+                    <input type="email" matInput [formControl]="emailFormControl" [errorStateMatcher]="matcher" placeholder="Ex. pat@example.com">
+                    <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+                        Please enter a valid email address
+                    </mat-error>
+                    <mat-error *ngIf="emailFormControl.hasError('required')">
+                        Email is <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
+
+                <button class="login-button" mat-raised-button color="primary">
+                    Register
+                </button>
+            </form>
+        </div>
+    </mat-tab>
+</mat-tab-group>

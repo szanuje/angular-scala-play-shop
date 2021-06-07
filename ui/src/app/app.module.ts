@@ -13,6 +13,8 @@ import { AuthenticationModule } from './authentication/authentication.module';
 import { BasketService } from './shared/services/basket-service';
 import { ProductService } from './shared/services/product-service';
 import { HttpClientModule } from '@angular/common/http';
+import { CookieService } from 'ngx-cookie-service';
+import { LoginPageComponent } from './authentication/login-page/login-page.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,7 @@ import { HttpClientModule } from '@angular/common/http';
       ...env.auth,
     })
   ],
-  providers: [BasketService, ProductService],
+  providers: [BasketService, ProductService, CookieService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

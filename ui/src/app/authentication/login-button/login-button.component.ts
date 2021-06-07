@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '@auth0/auth0-angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-button',
@@ -7,13 +7,12 @@ import { AuthService } from '@auth0/auth0-angular';
   styleUrls: ['./login-button.component.scss'],
 })
 export class LoginButtonComponent implements OnInit {
-  constructor(public auth: AuthService) {}
+
+  loginLink: string = '/login';
+
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
     //
-  }
-
-  loginWithRedirect(): void {
-    this.auth.loginWithRedirect();
   }
 }

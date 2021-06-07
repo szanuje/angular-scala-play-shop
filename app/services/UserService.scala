@@ -3,6 +3,7 @@ package services
 import com.mohiva.play.silhouette.api.LoginInfo
 import com.mohiva.play.silhouette.api.services.IdentityService
 import models.User
+import reactivemongo.api.commands.WriteResult
 import repositories.UserRepository
 
 import javax.inject.{Inject, Singleton}
@@ -12,7 +13,7 @@ import scala.concurrent.{ExecutionContext, Future}
 class UserService @Inject()(implicit ec: ExecutionContext, userRepository: UserRepository)
   extends IdentityService[User] {
 
-  def createUser(user: User): Unit = {
+  def createUser(user: User): Future[WriteResult] = {
     userRepository.createUser(user)
   }
 

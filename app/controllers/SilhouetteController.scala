@@ -5,7 +5,7 @@ import com.mohiva.play.silhouette.api.repositories.AuthInfoRepository
 import com.mohiva.play.silhouette.api.services.AuthenticatorService
 import com.mohiva.play.silhouette.api.util.{Clock, PasswordHasherRegistry}
 import com.mohiva.play.silhouette.api.{EventBus, Silhouette}
-import com.mohiva.play.silhouette.impl.providers.CredentialsProvider
+import com.mohiva.play.silhouette.impl.providers.{CredentialsProvider, SocialProviderRegistry}
 import play.api.Logging
 import play.api.http.FileMimeTypes
 import play.api.i18n.{I18nSupport, Langs, MessagesApi}
@@ -40,6 +40,8 @@ abstract class SilhouetteController(override protected val controllerComponents:
   def authenticatorService: AuthenticatorService[AuthType] = silhouette.env.authenticatorService
 
   def eventBus: EventBus = silhouette.env.eventBus
+
+  def socialProviderRegistry: SocialProviderRegistry = controllerComponents.socialProviderRegistry
 }
 
 /**
@@ -61,6 +63,8 @@ trait SilhouetteComponents {
   def credentialsProvider: CredentialsProvider
 
   def silhouette: Silhouette[EnvType]
+
+  def socialProviderRegistry: SocialProviderRegistry
 }
 
 /**
@@ -84,5 +88,6 @@ final case class DefaultSilhouetteControllerComponents @Inject()(
                                                                   messagesApi: MessagesApi,
                                                                   langs: Langs,
                                                                   fileMimeTypes: FileMimeTypes,
-                                                                  executionContext: scala.concurrent.ExecutionContext
+                                                                  executionContext: scala.concurrent.ExecutionContext,
+                                                                  socialProviderRegistry: SocialProviderRegistry
                                                                 ) extends SilhouetteControllerComponents

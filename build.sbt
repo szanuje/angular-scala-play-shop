@@ -28,5 +28,6 @@ libraryDependencies ++= Seq(
   "org.scalatestplus.play" %% "scalatestplus-play" % "5.0.0" % Test,
   "org.mongodb.scala" %% "mongo-scala-driver" % "2.8.0",
   "org.reactivemongo" %% "play2-reactivemongo" % "1.0.0-play27",
-  "org.reactivemongo" % "reactivemongo-play-json_2.13" % "0.20.13-play27"
-)
+  "org.reactivemongo" % "reactivemongo-play-json_2.13" % "0.20.13-play27",
+  "com.iheart" %% "ficus" % "1.5.0"
+  )
