@@ -1,10 +1,10 @@
 package repositories
 
-import models.{BasketProduct, Client, Product, User, UserBasket, UserDetails}
+import models._
 import play.api.Configuration
 import reactivemongo.api.MongoConnection.ParsedURI
-import reactivemongo.api.bson.{BSONDocumentReader, BSONDocumentWriter, Macros}
 import reactivemongo.api.bson.collection.BSONCollection
+import reactivemongo.api.bson.{BSONDocumentReader, BSONDocumentWriter, Macros}
 import reactivemongo.api.{AsyncDriver, DB, MongoConnection}
 
 import scala.concurrent.{ExecutionContext, Future}

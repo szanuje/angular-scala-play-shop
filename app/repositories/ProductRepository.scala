@@ -3,7 +3,7 @@ package repositories
 import models.Product
 import play.api.Configuration
 import reactivemongo.api.Cursor
-import reactivemongo.api.bson.{BSONDocument, BSONDocumentReader, BSONDocumentWriter, Macros}
+import reactivemongo.api.bson.BSONDocument
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
@@ -33,17 +33,18 @@ class ProductRepository @Inject()(implicit ec: ExecutionContext, config: Configu
   def findAllProducts(): Future[List[Product]] = {
     productsCollection
       .flatMap(_
-        .find(BSONDocument())
+        .find(BSONDocument(), Option.empty[Product])
         .cursor[Product]()
-        .collect(err = Cursor.FailOnError[List[Product]]())
+        .collect(Int.MaxValue, err = Cursor.FailOnError[List[Product]]())
       )
   }
 
   def findProductBy(property: String, queryString: String): Future[List[Product]] = {
     productsCollection
-      .flatMap(_.find(BSONDocument(
-        property -> queryString
-      )).cursor[Product]()
-        .collect(err = Cursor.FailOnError[List[Product]]()))
+      .flatMap(
+        _.find(BSONDocument(property -> queryString), Option.empty[Product])
+          .cursor[Product]()
+          .collect(Int.MaxValue, err = Cursor.FailOnError[List[Product]]())
+      )
   }
 }

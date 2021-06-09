@@ -28,7 +28,7 @@ class UserRepository @Inject()(implicit ec: ExecutionContext, config: Configurat
   def findUser(loginInfo: LoginInfo): Future[Option[User]] = {
     clientsCollection
       .flatMap(_
-        .find(BSONDocument("user.username" -> loginInfo.providerKey))
+        .find(BSONDocument("user.email" -> loginInfo.providerKey), Option.empty[User])
         .one[Client])
       .map(clientOption => clientOption.map(client => client.getUser))
   }
@@ -37,7 +37,7 @@ class UserRepository @Inject()(implicit ec: ExecutionContext, config: Configurat
     clientsCollection.flatMap(col => {
       val updateBuilder = col.update(true)
       val updates = updateBuilder.element(
-        q = BSONDocument("user.username" -> user.getName),
+        q = BSONDocument("user.email" -> user.getEmail),
         u = BSONDocument("$set" -> BSONDocument(
           "user" -> user
         )),

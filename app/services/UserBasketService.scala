@@ -8,15 +8,15 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class UserBasketService @Inject()(implicit ec: ExecutionContext, userBasketRepository: UserBasketRepository) {
 
-  def findUserBasket(username: String): Future[Option[UserBasket]] = {
-    userBasketRepository.findUserBasket(username)
+  def findUserBasket(email: String): Future[Option[UserBasket]] = {
+    userBasketRepository.findUserBasket(email)
   }
 
-  def updateUserBasket(username: String, userBasket: UserBasket): Unit = {
-    userBasketRepository.updateUserBasket(username, userBasket)
+  def updateUserBasket(email: String, userBasket: UserBasket): Unit = {
+    userBasketRepository.updateUserBasket(email, userBasket)
   }
 
-  def deleteUserBasket(username: String): Unit = {
-    userBasketRepository.deleteUserBasket(username)
+  def deleteUserBasket(email: String): Unit = {
+    userBasketRepository.deleteUserBasket(email)
   }
 }

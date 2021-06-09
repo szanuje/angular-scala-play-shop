@@ -9,11 +9,11 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class UserDetailsService @Inject()(implicit ec: ExecutionContext, userDetailsRepository: UserDetailsRepository) {
 
-  def findUserDetails(username: String): Future[Option[UserDetails]] = {
-    userDetailsRepository.findUserDetails(username)
+  def findUserDetails(email: String): Future[Option[UserDetails]] = {
+    userDetailsRepository.findUserDetails(email)
   }
 
-  def updateUserDetails(username: String, userDetails: UserDetails): Unit = {
-    userDetailsRepository.updateUserDetails(username, userDetails)
+  def updateUserDetails(email: String, userDetails: UserDetails): Unit = {
+    userDetailsRepository.updateUserDetails(email, userDetails)
   }
 }

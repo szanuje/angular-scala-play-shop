@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '@auth0/auth0-angular';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-home',
@@ -7,13 +7,15 @@ import { AuthService } from '@auth0/auth0-angular';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  profileJson: string | null = null;
 
-  constructor(public auth: AuthService) {}
+  email: string = '';
+
+  constructor(private cookieService: CookieService) {
+    //
+  }
 
   ngOnInit(): void {
-    this.auth.user$.subscribe(
-      (profile) => (this.profileJson = JSON.stringify(profile, null, 2))
-    );
+    this.email = this.cookieService.get('user');
   }
+
 }

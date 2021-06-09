@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '@auth0/auth0-angular';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-authentication',
@@ -7,9 +7,16 @@ import { AuthService } from '@auth0/auth0-angular';
   styleUrls: ['./authentication.component.scss'],
 })
 export class AuthenticationComponent implements OnInit {
-  constructor(public auth: AuthService) {}
+
+  userLoggedIn: boolean = false;
+
+  constructor(private cookieService: CookieService) {}
 
   ngOnInit(): void {
-    //
+    if(this.cookieService.get('user') !== '') {
+      this.userLoggedIn = true;
+    } else {
+      this.userLoggedIn = false;
+    }
   }
 }

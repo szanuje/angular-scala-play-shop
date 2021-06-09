@@ -14,19 +14,21 @@ import com.mohiva.play.silhouette.impl.providers.oauth2.GoogleProvider
 import com.mohiva.play.silhouette.impl.providers.state.{CsrfStateItemHandler, CsrfStateSettings}
 import com.mohiva.play.silhouette.impl.util._
 import com.mohiva.play.silhouette.password.{BCryptPasswordHasher, BCryptSha256PasswordHasher}
-import com.mohiva.play.silhouette.persistence.daos.DelegableAuthInfoDAO
+import com.mohiva.play.silhouette.persistence.daos.{DelegableAuthInfoDAO, MongoAuthInfoDAO}
 import com.mohiva.play.silhouette.persistence.repositories.DelegableAuthInfoRepository
 import com.typesafe.config.Config
 import controllers.{DefaultSilhouetteControllerComponents, SilhouetteControllerComponents}
-import net.codingwell.scalaguice.ScalaModule
-import play.api.Configuration
-import play.api.libs.ws.WSClient
-import services.UserService
-import utils.auth.{CustomSecuredErrorHandler, CustomUnsecuredErrorHandler, JWTEnvironment, PasswordInfoImpl}
 import net.ceedubs.ficus.Ficus._
 import net.ceedubs.ficus.readers.ArbitraryTypeReader._
 import net.ceedubs.ficus.readers.ValueReader
+import net.codingwell.scalaguice.ScalaModule
+import play.api.Configuration
+import play.api.libs.json.{Json, OFormat}
+import play.api.libs.ws.WSClient
 import play.api.mvc.Cookie
+import play.modules.reactivemongo.ReactiveMongoApi
+import services.UserService
+import utils.auth.{CustomSecuredErrorHandler, CustomUnsecuredErrorHandler, JWTEnvironment}
 
 import javax.inject.Named
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -34,7 +36,6 @@ import scala.concurrent.duration.{Duration, FiniteDuration}
 
 
 class SilhouetteModule extends AbstractModule with ScalaModule {
-
   implicit val sameSiteReader: ValueReader[Option[Option[Cookie.SameSite]]] =
     (config: Config, path: String) => {
       if (config.hasPathOrNull(path)) {
@@ -128,14 +129,17 @@ class SilhouetteModule extends AbstractModule with ScalaModule {
     ), None, encoder, idGenerator, clock)
   }
 
-  /**
-   * Provides auth info delegable auth info repository.
-   *
-   * @param userDao Operations with user table in database
-   * @return DelegableAuthInfoDAO implementation
-   */
   @Provides
-  def providePasswordDAO(userService: UserService): DelegableAuthInfoDAO[PasswordInfo] = new PasswordInfoImpl(userService)
+  def providePasswordInfoDAO(reactiveMongoApi: ReactiveMongoApi, config: Configuration): DelegableAuthInfoDAO[PasswordInfo] = {
+    implicit lazy val format: OFormat[PasswordInfo] = Json.format[PasswordInfo]
+    new MongoAuthInfoDAO[PasswordInfo](reactiveMongoApi, config)
+  }
+
+  @Provides
+  def provideOAuth2InfoDAO(reactiveMongoApi: ReactiveMongoApi, config: Configuration): DelegableAuthInfoDAO[OAuth2Info] = {
+    implicit lazy val format: OFormat[OAuth2Info] = Json.format[OAuth2Info]
+    new MongoAuthInfoDAO[OAuth2Info](reactiveMongoApi, config)
+  }
 
   /**
    * Provides the auth info repository.
@@ -144,8 +148,11 @@ class SilhouetteModule extends AbstractModule with ScalaModule {
    * @return The auth info repository instance.
    */
   @Provides
-  def provideAuthInfoRepository(passwordInfoDAO: DelegableAuthInfoDAO[PasswordInfo]): AuthInfoRepository = {
-    new DelegableAuthInfoRepository(passwordInfoDAO)
+  def provideAuthInfoRepository(
+                                 passwordInfoDAO: DelegableAuthInfoDAO[PasswordInfo],
+                                 oauth2InfoDAO: DelegableAuthInfoDAO[OAuth2Info],
+                               ): AuthInfoRepository = {
+    new DelegableAuthInfoRepository(passwordInfoDAO, oauth2InfoDAO)
   }
 
   /**

@@ -5,29 +5,28 @@ version := "1.0-SNAPSHOT"
 
 lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
-scalaVersion := "2.13.5"
+scalaVersion := "2.12.10"
+routesGenerator := InjectedRoutesGenerator
 
 resolvers += Resolver.jcenterRepo
 resolvers += "scalaz-bintray" at "https://dl.bintray.com/scalaz/releases"
 
-// Adds additional packages into Twirl
-//TwirlKeys.templateImports += "com.maksple.controllers._"
+libraryDependencies ++= Seq(ehcache, ws, specs2 % Test, guice, filters)
 
-// Adds additional packages into conf/routes
-// play.sbt.routes.RoutesKeys.routesImport += "com.maksple.binders._"
-
-val playSilhouetteVersion = "6.1.1"
+val playSilhouetteVersion = "5.0.7"
 libraryDependencies ++= Seq(
   "com.mohiva" %% "play-silhouette" % playSilhouetteVersion,
   "com.mohiva" %% "play-silhouette-password-bcrypt" % playSilhouetteVersion,
   "com.mohiva" %% "play-silhouette-persistence" % playSilhouetteVersion,
   "com.mohiva" %% "play-silhouette-crypto-jca" % playSilhouetteVersion,
-  "net.codingwell" %% "scala-guice" % "4.2.6",
-  guice,
-  filters,
-  "org.scalatestplus.play" %% "scalatestplus-play" % "5.0.0" % Test,
-  "org.mongodb.scala" %% "mongo-scala-driver" % "2.8.0",
-  "org.reactivemongo" %% "play2-reactivemongo" % "1.0.0-play27",
-  "org.reactivemongo" % "reactivemongo-play-json_2.13" % "0.20.13-play27",
-  "com.iheart" %% "ficus" % "1.5.0"
+  "com.mohiva" %% "play-silhouette-persistence-reactivemongo" % "5.0.6",
   )
+
+libraryDependencies ++= Seq(
+  "net.codingwell" %% "scala-guice" % "4.2.6",
+  "org.scalatestplus.play" %% "scalatestplus-play" % "5.0.0" % Test,
+  "org.reactivemongo" %% "play2-reactivemongo" % "0.20.13-play28",
+  "org.reactivemongo" % "reactivemongo-play-json_2.12" % "0.20.13-play28",
+  "com.iheart" %% "ficus" % "1.5.0",
+  "org.apache.commons" % "commons-lang3" % "3.12.0"
+)

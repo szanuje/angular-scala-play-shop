@@ -1,9 +1,7 @@
 <p>
     <mat-toolbar color="primary">
-        <span>Hello</span>
-        <span style="padding-left: 5px" *ngIf="auth.user$ | async as user">{{
-            user.nickname
-            }}</span>
+        <span>Hello </span>
+        <span style="padding-left: 5px">{{email}}</span>
         <span style="width: 100%"></span>
         <app-menu></app-menu>
     </mat-toolbar>

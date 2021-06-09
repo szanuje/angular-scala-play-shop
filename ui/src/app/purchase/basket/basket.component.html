@@ -21,7 +21,7 @@
             <p>{{getBasketValue()}}</p>
         </mat-list>
     </mat-card-content>
-    <button [routerLink]="checkoutRedirectPath" class="checkout-button" mat-raised-button color="primary">
+    <button [routerLink]="checkoutRedirectPath" (click)="saveUserBasket()" class="checkout-button" mat-raised-button color="primary">
         Checkout
     </button>
 </mat-card>

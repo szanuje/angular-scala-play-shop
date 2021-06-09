@@ -1,17 +1,19 @@
 package controllers
 
+import com.mohiva.play.silhouette.impl.providers.CredentialsProvider
 import models._
 import play.api.libs.json.{Json, OWrites, Reads}
-import play.api.mvc.{AbstractController, Action, AnyContent, ControllerComponents}
+import play.api.mvc.{Action, AnyContent}
 import services.UserBasketService
+import utils.auth.{JWTEnvironment, WithProvider}
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 @Singleton
-class UserBasketController @Inject()(cc: ControllerComponents, userBasketService: UserBasketService)
-  extends AbstractController(cc) {
+class UserBasketController @Inject()(ssc: SilhouetteControllerComponents, userBasketService: UserBasketService)
+  extends SilhouetteController(ssc) {
 
   implicit lazy val userBasketWrites: OWrites[UserBasket] = Json.writes[UserBasket]
   implicit lazy val userBasketReads: Reads[UserBasket] = Json.reads[UserBasket]
@@ -22,23 +24,25 @@ class UserBasketController @Inject()(cc: ControllerComponents, userBasketService
   implicit lazy val productWrites: OWrites[Product] = Json.writes[Product]
   implicit lazy val productReads: Reads[Product] = Json.reads[Product]
 
-  def getUserBasket(username: String): Action[AnyContent] = Action.async { implicit request => {
-    userBasketService.findUserBasket(username)
-      .map(res => Ok(Json.toJson(res)))
-      .recover(th => BadRequest(th.getMessage))
-  }
-  }
+  def getUserBasket(email: String): Action[AnyContent] =
+    SecuredAction(WithProvider[JWTEnvironment#A](CredentialsProvider.ID)).async { implicit request => {
+      userBasketService.findUserBasket(email)
+        .map(res => Ok(Json.toJson(res))) //
+    }
+    }
 
-  def putUserBasket(username: String): Action[UserBasket] = Action.async(parse.json[UserBasket]) { implicit request => {
-    val basketProduct = request.body
-    userBasketService.updateUserBasket(username, basketProduct)
-    Future.successful(Created)
-  }
-  }
+  def putUserBasket(email: String): Action[UserBasket] =
+    SecuredAction(WithProvider[JWTEnvironment#A](CredentialsProvider.ID)).async(parse.json[UserBasket]) { implicit request => {
+      val basketProduct = request.body
+      userBasketService.updateUserBasket(email, basketProduct)
+      Future.successful(Created.withHeaders(("access-control-expose-headers", "X-Auth")))
+    }
+    }
 
-  def deleteUserBasket(username: String): Action[AnyContent] = Action.async { implicit request => {
-    userBasketService.deleteUserBasket(username)
-    Future.successful(Ok)
-  }
-  }
+  def deleteUserBasket(email: String): Action[AnyContent] =
+    SecuredAction(WithProvider[JWTEnvironment#A](CredentialsProvider.ID)).async { implicit request => {
+      userBasketService.deleteUserBasket(email)
+      Future.successful(Ok)
+    }
+    }
 }

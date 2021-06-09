@@ -11,19 +11,19 @@ import scala.concurrent.{ExecutionContext, Future}
 class UserDetailsRepository @Inject()(implicit ec: ExecutionContext, config: Configuration)
   extends AbstractMongoRepository {
 
-  def findUserDetails(username: String): Future[Option[UserDetails]] = {
+  def findUserDetails(email: String): Future[Option[UserDetails]] = {
     clientsCollection
       .flatMap(_
-        .find(BSONDocument("user.username" -> username))
+        .find(BSONDocument("user.email" -> email), Option.empty[UserDetails])
         .one[Client])
       .map(clientOption => clientOption.map(client => client.getUserDetails))
   }
 
-  def updateUserDetails(username: String, userDetails: UserDetails): Unit = {
+  def updateUserDetails(email: String, userDetails: UserDetails): Unit = {
     clientsCollection.flatMap(col => {
       val updateBuilder = col.update(true)
       val updates = updateBuilder.element(
-        q = BSONDocument("user.username" -> username),
+        q = BSONDocument("user.email" -> email),
         u = BSONDocument("$set" -> BSONDocument(
           "userDetails" -> userDetails
         )),

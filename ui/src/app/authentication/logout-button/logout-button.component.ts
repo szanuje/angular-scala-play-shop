@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-logout-button',
@@ -6,8 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./logout-button.component.scss'],
 })
 export class LogoutButtonComponent implements OnInit {
-  constructor() {
-    //
+  constructor(private cookieService: CookieService) {
   }
 
   ngOnInit(): void {
@@ -15,6 +15,8 @@ export class LogoutButtonComponent implements OnInit {
   }
 
   logout(): void {
-    //
+    this.cookieService.delete('user');
+    this.cookieService.delete('auth');
+    window.location.href = '/';
   }
 }

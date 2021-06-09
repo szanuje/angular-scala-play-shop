@@ -17,9 +17,9 @@ case class WithProvider[A <: Authenticator](provider: String) extends Authorizat
   /**
    * Indicates if a user is authorized to access an action.
    *
-   * @param user The usr object.
+   * @param user          The usr object.
    * @param authenticator The authenticator instance.
-   * @param request The current request.
+   * @param request       The current request.
    * @tparam B The type of the request body.
    * @return True if the user is authorized, false otherwise.
    */

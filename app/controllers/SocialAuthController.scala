@@ -1,15 +1,14 @@
 package controllers
 
+import com.mohiva.play.silhouette.api.LoginInfo
 import com.mohiva.play.silhouette.api.exceptions.ProviderException
 import com.mohiva.play.silhouette.impl.providers._
 import models.User
-
-import javax.inject.Inject
-import play.api.mvc.{Action, AnyContent, Cookie, Request}
-import play.filters.csrf.CSRF.Token
-import play.filters.csrf.{CSRF, CSRFAddToken}
+import play.api.mvc.{Action, AnyContent, Request}
+import play.filters.csrf.CSRFAddToken
 import services.UserService
 
+import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class SocialAuthController @Inject()(scc: DefaultSilhouetteControllerComponents,
@@ -17,27 +16,33 @@ class SocialAuthController @Inject()(scc: DefaultSilhouetteControllerComponents,
                                      userService: UserService)(implicit ex: ExecutionContext)
   extends SilhouetteController(scc) {
 
-  def authenticate(provider: String): Action[AnyContent] = addToken(Action.async { implicit request: Request[AnyContent] =>
+  def authenticate(provider: String): Action[AnyContent] = Action.async { implicit request: Request[AnyContent] =>
     (socialProviderRegistry.get[SocialProvider](provider) match {
       case Some(p: SocialProvider with CommonSocialProfileBuilder) =>
         p.authenticate().flatMap {
           case Left(result) => Future.successful(result)
           case Right(authInfo) => for {
             profile <- p.retrieveProfile(authInfo)
-            _ <- userService.createUser(User(profile.loginInfo.providerID, profile.loginInfo.providerKey, profile.email.getOrElse("")))
-            _ <- authInfoRepository.save(profile.loginInfo, authInfo)
-            authenticator <- authenticatorService.create(profile.loginInfo)
-            value <- authenticatorService.init(authenticator)
-            result <- authenticatorService.embed(value, Redirect("http://localhost:9000"))
+            loginInfo = LoginInfo(profile.loginInfo.providerID, profile.email.get)
+            // Create user if doesn't exist
+            _ <- userService.retrieve(loginInfo).flatMap {
+              case None =>
+                userService.createUser(User(profile.email.get, None, profile.firstName.get))
+              case _ => Future.successful()
+            }
+            authenticator <- authenticatorService.create(loginInfo)
+            authToken <- authenticatorService.init(authenticator)
+            result <- authenticatorService.embed(authToken, Ok)
           } yield {
-            val Token(name, value) = CSRF.getToken.get
-            result.withCookies(Cookie(name, value, httpOnly = false))
+            logger.debug(s"User ${profile.loginInfo.providerKey} signed success")
+            result
           }
         }
       case _ => Future.failed(new ProviderException(s"Cannot authenticate with unexpected social provider $provider"))
     }).recover {
-      case _: ProviderException =>
+      case e: ProviderException =>
+        logger.error("Unexpected provider error", e)
         Forbidden("Forbidden")
     }
-  })
+  }
 }

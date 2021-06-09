@@ -1,32 +1,37 @@
 package controllers
 
+import com.mohiva.play.silhouette.impl.providers.CredentialsProvider
 import models._
 import play.api.libs.json.{Json, OWrites, Reads}
-import play.api.mvc.{AbstractController, Action, AnyContent, ControllerComponents}
+import play.api.mvc.{Action, AnyContent}
 import services.UserDetailsService
+import utils.auth.{JWTEnvironment, WithProvider}
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 @Singleton
-class UserDetailsController @Inject()(cc: ControllerComponents, userDetailsService: UserDetailsService) extends AbstractController(cc) {
+class UserDetailsController @Inject()(ssc: SilhouetteControllerComponents, userDetailsService: UserDetailsService)
+  extends SilhouetteController(ssc) {
 
   implicit lazy val userDetailsWrites: OWrites[UserDetails] = Json.writes[UserDetails]
   implicit lazy val userDetailsReads: Reads[UserDetails] = Json.reads[UserDetails]
 
-  def putUserDetails(username: String): Action[UserDetails] = Action.async(parse.json[UserDetails]) { implicit request => {
-    val userDetails = request.body
-    userDetailsService.updateUserDetails(username, userDetails)
-    Future.successful(Created)
-  }
-  }
+  def putUserDetails(email: String): Action[UserDetails] =
+    SecuredAction(WithProvider[JWTEnvironment#A](CredentialsProvider.ID))
+      .async(parse.json[UserDetails]) { implicit request => {
+        val userDetails = request.body
+        userDetailsService.updateUserDetails(email, userDetails)
+        Future.successful(Created)
+      }
+      }
 
-  def getUserDetails(username: String): Action[AnyContent] = Action.async { implicit request => {
-    userDetailsService.findUserDetails(username)
-      .map(res => Ok(Json.toJson(res)))
-      .recover(th => BadRequest(th.getMessage))
-  }
-  }
+  def getUserDetails(email: String): Action[AnyContent] =
+    SecuredAction(WithProvider[JWTEnvironment#A](CredentialsProvider.ID)).async { implicit request => {
+      userDetailsService.findUserDetails(email)
+        .map(res => Ok(Json.toJson(res))) //
+    }
+    }
 
 }

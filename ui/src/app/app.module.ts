@@ -14,13 +14,14 @@ import { BasketService } from './shared/services/basket-service';
 import { ProductService } from './shared/services/product-service';
 import { HttpClientModule } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
-import { LoginPageComponent } from './authentication/login-page/login-page.component';
+import { LoginPageComponent } from './login-page/login-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    MenuComponent
+    MenuComponent,
+    LoginPageComponent
   ],
   imports: [
     CommonModule,

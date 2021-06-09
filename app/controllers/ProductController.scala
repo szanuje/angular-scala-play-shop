@@ -18,8 +18,7 @@ class ProductController @Inject()(cc: ControllerComponents, productService: Prod
 
   def getProducts: Action[AnyContent] = Action.async { implicit request => {
     productService.findAllProducts()
-      .map(res => Ok(Json.toJson(res)))
-      .recover(th => BadRequest(th.getMessage))
+      .map(res => Ok(Json.toJson(res))) //
   }
   }
 
@@ -33,8 +32,7 @@ class ProductController @Inject()(cc: ControllerComponents, productService: Prod
     productService.findProductBy(key, value)
       .map(res => {
         Ok(Json.toJson(res))
-      })
-      .recover(th => BadRequest(th.getMessage))
+      }) //
   }
   }
 
