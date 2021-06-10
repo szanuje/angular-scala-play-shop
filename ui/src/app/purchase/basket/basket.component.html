@@ -18,10 +18,9 @@
                 </div>
 
             </mat-list-item>
-            <p>{{getBasketValue()}}</p>
         </mat-list>
     </mat-card-content>
     <button [routerLink]="checkoutRedirectPath" (click)="saveUserBasket()" class="checkout-button" mat-raised-button color="primary">
-        Checkout
+        Checkout {{getBasketValue()}}$
     </button>
 </mat-card>

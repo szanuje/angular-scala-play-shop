@@ -35,30 +35,30 @@ export class CheckoutComponent implements OnInit {
     private basketService: BasketService,
     private _snackBar: MatSnackBar
   ) {
-    this.basket = basketService.getBasket();
+    this.basket = this.basketService.getBasket();
   }
 
   ngOnInit(): void {
-    this.initBasket();
+    this.basketService.getBasketSubject().subscribe(b => this.basket = b);
   }
 
-  initBasket() {
-    return this.basketService.getBasketObservable().subscribe((b) => (this.basket = b));
+  getBasket() {
+    return this.basket;
   }
 
-  getBasketProducts() {
+  getBasketProducts(): BasketProduct[] {
     return this.basket.getBasketProducts();
   }
 
-  getBasketSize() {
+  getBasketSize(): number {
     return this.basket.getBasketProducts().length;
   }
 
-  getBasketValue() {
+  getBasketValue(): number {
     return this.basket.getTotalPrice();
   }
 
-  openSnackBar() {
+  openSnackBar(): void {
     this._snackBar.open('Success!', 'Close');
   }
 }

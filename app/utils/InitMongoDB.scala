@@ -19,7 +19,7 @@ class InitMongoDB @Inject()(lifecycle: ApplicationLifecycle, productService: Pro
 
   def initDB(): Unit = {
     for (i <- 0 to 30) {
-      productService.createProduct(Product("Product" + i, "category" + i % 5, "Product description here..." + i, 9.99f))
+      productService.createProduct(Product("Product" + i, "category" + i % 5, "Product description here..." + i, BigDecimal("9.99")))
     }
   }
 

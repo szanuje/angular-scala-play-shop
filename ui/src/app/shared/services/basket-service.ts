@@ -1,85 +1,102 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
-import { Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 import { Product } from 'src/app/_model/Product';
 import { UserBasket } from 'src/app/_model/UserBasket';
-import { map } from 'rxjs/operators';
+import 'reflect-metadata';
+import { plainToClass } from 'class-transformer';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BasketService {
-  private basket: UserBasket;
-  private basketObservable: Subject<UserBasket>;
+  private basket: UserBasket = new UserBasket();
+  private basketSubject = new Subject<UserBasket>();
 
   constructor(private http: HttpClient, private cookieService: CookieService) {
-
-    this.basket = new UserBasket();
-    console.log(this.basket);
-
-    this.basketObservable = new Subject<UserBasket>();
-    if(this.userLoggedIn()) {
-      this.fetchUserBasket().subscribe(
-        basket => {
-        console.log('loaded1');
-
-        console.log(basket);
-        console.log('loaded2');
-
-        this.basketObservable.next(basket);
-
-      });
+    if(this.cookieService.get('basket') !== '') {
+    let parseBasket = JSON.parse(this.cookieService.get('basket'));
+      this.basket = plainToClass(UserBasket, parseBasket);
     }
-    console.log(this.basket);
   }
 
-  addProductToBasket(product: Product) {
-    this.basket.addProductToBasket(product);
-    this.basketObservable.next(this.basket);
-    this.updateCookie(this.basket);
-    this.saveUserBasket();
-  }
-
-  getBasketObservable() {
-    return this.basketObservable;
-  }
+  // getBasket(): Observable<UserBasket> {
+  //   if (this.userLoggedIn()) {
+  //     return this.fetchUserBasket();
+  //   }
+  //   else if (this.cookieService.get('basket') !== '') {
+  //     return JSON.parse(this.cookieService.get('basket')).asObservable();
+  //     //this.basketSubject.next(this.basket);
+  //   } else {
+  //     return of(new UserBasket());
+  //   }  
+  // }
 
   getBasket() {
     return this.basket;
   }
 
-  fetchBasket() {
-    this.http.get('localhost:9000/api/users/user1/basket');
+  getBasketSubject() {
+    return this.basketSubject;
   }
 
-  updateCookie(basket: UserBasket) {
+  initBasketLoggedUser() {
+    console.log('sadf')
+    this.fetchUserBasket().subscribe(b => {
+      this.basket = b;
+      //this.basketSubject.next(b);
+      console.log('basket', this.basket);
+    });
+  }
+
+  addProductToBasket(product: Product): void {
+    this.basket.addProductToBasket(product);
+    this.updateCookie(this.basket);
+    this.saveUserBasket();
+    //this.basketSubject.next(this.basket);
+  }
+
+  updateCookie(basket: UserBasket): void {
     this.cookieService.set('basket', JSON.stringify(basket));
   }
 
-  saveUserBasket() {
-    if(this.userLoggedIn()) {
+  saveUserBasket(): void {
+    if (this.userLoggedIn()) {
       let headers = new HttpHeaders({
-        'X-Auth': this.cookieService.get('auth').slice(1,-1),
+        'X-Auth': this.cookieService.get('auth').slice(1, -1),
       });
       let options = { headers: headers };
-      this.http.put<any>('http://localhost:9000/api/users/' + this.cookieService.get('user') + '/basket', this.basket, options)
-       .subscribe(res => console.log('updated basket'));
+      this.http
+        .put<any>(
+          'http://localhost:9000/api/users/' +
+            this.cookieService.get('user') +
+            '/basket',
+          this.basket,
+          options
+        )
+        .subscribe((res) => console.log('updated basket'));
     }
   }
 
-  userLoggedIn() {
-    if(this.cookieService.get("user") !== '') {
+  fetchUserBasket(): Observable<UserBasket> {
+    let headers = new HttpHeaders({
+      'X-Auth': this.cookieService.get('auth').slice(1, -1),
+    });
+    let options = { headers: headers };
+    return this.http.get<UserBasket>(
+      'http://localhost:9000/api/users/' +
+        this.cookieService.get('user') +
+        '/basket',
+      options
+    );
+  }
+
+  userLoggedIn(): boolean {
+    if (this.cookieService.get('user') !== '') {
       return true;
     }
     return false;
   }
 
-  fetchUserBasket(): Observable<UserBasket> {
-    let headers = new HttpHeaders({
-      'X-Auth': this.cookieService.get('auth').slice(1,-1),
-    });
-    let options = { headers: headers };
-    return this.http.get<UserBasket>('http://localhost:9000/api/users/' + this.cookieService.get('user') + '/basket', options)
-    }
 }
