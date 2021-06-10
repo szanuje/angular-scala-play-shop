@@ -15,4 +15,4 @@ WORKDIR /home/max/project
 COPY . /home/max/project
 RUN sbt compile
 EXPOSE 9000
-CMD sbt run
+CMD sbt -mem 1024 run

@@ -19,7 +19,7 @@ class UserDetailsController @Inject()(ssc: SilhouetteControllerComponents, userD
   implicit lazy val userDetailsReads: Reads[UserDetails] = Json.reads[UserDetails]
 
   def putUserDetails(email: String): Action[UserDetails] =
-    SecuredAction(WithProvider[JWTEnvironment#A](CredentialsProvider.ID))
+    securedAction(WithProvider[JWTEnvironment#A](CredentialsProvider.ID))
       .async(parse.json[UserDetails]) { implicit request => {
         val userDetails = request.body
         userDetailsService.updateUserDetails(email, userDetails)
@@ -28,7 +28,7 @@ class UserDetailsController @Inject()(ssc: SilhouetteControllerComponents, userD
       }
 
   def getUserDetails(email: String): Action[AnyContent] =
-    SecuredAction(WithProvider[JWTEnvironment#A](CredentialsProvider.ID)).async { implicit request => {
+    securedAction(WithProvider[JWTEnvironment#A](CredentialsProvider.ID)).async { implicit request => {
       userDetailsService.findUserDetails(email)
         .map(res => Ok(Json.toJson(res))) //
     }

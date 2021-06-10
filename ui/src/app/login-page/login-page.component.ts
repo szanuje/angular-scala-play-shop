@@ -1,9 +1,9 @@
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { CookieService } from 'ngx-cookie-service';
-import { User } from 'src/app/_model/User';
+import { environment } from 'src/environments/environment';
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -18,7 +18,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.scss']
 })
-export class LoginPageComponent implements OnInit {
+export class LoginPageComponent {
 
   nameLFormControl = new FormControl('', [
     Validators.required
@@ -59,9 +59,8 @@ export class LoginPageComponent implements OnInit {
 
   matcher = new MyErrorStateMatcher();
 
-  constructor(private http: HttpClient, private cookieService: CookieService) { }
-
-  ngOnInit(): void {
+  constructor(private http: HttpClient, private cookieService: CookieService) {
+    //
   }
 
   headers = new HttpHeaders({
@@ -71,7 +70,7 @@ export class LoginPageComponent implements OnInit {
 
   onLoginSubmit() {
     console.log(this.loginForm.value);
-    this.http.post<any>("http://localhost:9000/api/login", this.loginForm.value, {observe: 'response'})
+    this.http.post<any>(environment.api_url + '/api/login', this.loginForm.value, {observe: 'response'})
     .subscribe((res: HttpResponse<any>) => {
       let myHeader = res.headers.get('X-Auth');
       if(myHeader !== null) {
@@ -86,12 +85,13 @@ export class LoginPageComponent implements OnInit {
 
   onRegisterSubmit() {
     console.log(this.registerForm.value);
-    this.http.post<any>("http://localhost:9000/api/register", this.loginForm.value, {observe: 'response'})
+    this.http.post<any>(environment.api_url + '/api/register', this.registerForm.value, {observe: 'response'})
     .subscribe(res => console.log(res));
   }
 
   loginWithGoogle() {
-    window.location.href = 'http://localhost:9000/authenticate/google';
+    window.location.href = environment.api_url + '/authenticate/google';
+    console.log(window.location);
   }
 
   saveAuthCookie(authString: string) {

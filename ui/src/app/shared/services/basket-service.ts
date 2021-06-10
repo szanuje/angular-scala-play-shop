@@ -1,11 +1,12 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
-import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Product } from 'src/app/_model/Product';
 import { UserBasket } from 'src/app/_model/UserBasket';
 import 'reflect-metadata';
 import { plainToClass } from 'class-transformer';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -15,8 +16,8 @@ export class BasketService {
   private basketSubject = new Subject<UserBasket>();
 
   constructor(private http: HttpClient, private cookieService: CookieService) {
-    if(this.cookieService.get('basket') !== '') {
-    let parseBasket = JSON.parse(this.cookieService.get('basket'));
+    if (this.cookieService.get('basket') !== '') {
+      let parseBasket = JSON.parse(this.cookieService.get('basket'));
       this.basket = plainToClass(UserBasket, parseBasket);
     }
   }
@@ -30,7 +31,7 @@ export class BasketService {
   //     //this.basketSubject.next(this.basket);
   //   } else {
   //     return of(new UserBasket());
-  //   }  
+  //   }
   // }
 
   getBasket() {
@@ -42,8 +43,8 @@ export class BasketService {
   }
 
   initBasketLoggedUser() {
-    console.log('sadf')
-    this.fetchUserBasket().subscribe(b => {
+    console.log('sadf');
+    this.fetchUserBasket().subscribe((b) => {
       this.basket = b;
       //this.basketSubject.next(b);
       console.log('basket', this.basket);
@@ -69,7 +70,8 @@ export class BasketService {
       let options = { headers: headers };
       this.http
         .put<any>(
-          'http://localhost:9000/api/users/' +
+          environment.api_url +
+            '/api/users/' +
             this.cookieService.get('user') +
             '/basket',
           this.basket,
@@ -85,7 +87,8 @@ export class BasketService {
     });
     let options = { headers: headers };
     return this.http.get<UserBasket>(
-      'http://localhost:9000/api/users/' +
+      environment.api_url +
+        '/api/users/' +
         this.cookieService.get('user') +
         '/basket',
       options
@@ -98,5 +101,4 @@ export class BasketService {
     }
     return false;
   }
-
 }

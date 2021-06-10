@@ -6,7 +6,6 @@ import { ProductsComponent } from './products/products.component';
 import { AngularMaterialModule } from '../material.module';
 import { RouterModule } from '@angular/router';
 import { CheckoutComponent } from './checkout/checkout.component';
-import { BasketService } from '../shared/services/basket-service';
 
 @NgModule({
   declarations: [

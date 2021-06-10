@@ -16,7 +16,7 @@ class SignInController @Inject()(ssc: SilhouetteControllerComponents) extends Si
 
   implicit val signInFormat: OFormat[SignInModel] = Json.format[SignInModel]
 
-  def signIn: Action[AnyContent] = UnsecuredAction.async { implicit request: Request[AnyContent] =>
+  def signIn: Action[AnyContent] = unsecuredAction.async { implicit request: Request[AnyContent] =>
     implicit val lang: Lang = supportedLangs.availables.head
     request.body.asJson.flatMap(_.asOpt[SignInModel]) match {
       case Some(signInModel) =>

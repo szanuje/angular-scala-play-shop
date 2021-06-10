@@ -4,15 +4,14 @@ import com.mohiva.play.silhouette.api.LoginInfo
 import com.mohiva.play.silhouette.api.exceptions.ProviderException
 import com.mohiva.play.silhouette.impl.providers._
 import models.User
-import play.api.mvc.{Action, AnyContent, Request}
-import play.filters.csrf.CSRFAddToken
+import play.api.mvc.{Action, AnyContent, Cookie, Request}
 import services.UserService
 
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class SocialAuthController @Inject()(scc: DefaultSilhouetteControllerComponents,
-                                     addToken: CSRFAddToken,
+                                     configuration: play.api.Configuration,
                                      userService: UserService)(implicit ex: ExecutionContext)
   extends SilhouetteController(scc) {
 
@@ -24,18 +23,20 @@ class SocialAuthController @Inject()(scc: DefaultSilhouetteControllerComponents,
           case Right(authInfo) => for {
             profile <- p.retrieveProfile(authInfo)
             loginInfo = LoginInfo(profile.loginInfo.providerID, profile.email.get)
-            // Create user if doesn't exist
             _ <- userService.retrieve(loginInfo).flatMap {
               case None =>
                 userService.createUser(User(profile.email.get, None, profile.firstName.get))
-              case _ => Future.successful()
+              case _ => Future.successful(())
             }
             authenticator <- authenticatorService.create(loginInfo)
             authToken <- authenticatorService.init(authenticator)
-            result <- authenticatorService.embed(authToken, Ok)
+            result <- authenticatorService.embed(
+              authToken,
+              Redirect(configuration.underlying.getString("hosts.client") +
+                "/sso?user=" + profile.firstName.get + "&token=" + authToken))
           } yield {
             logger.debug(s"User ${profile.loginInfo.providerKey} signed success")
-            result
+            result.withCookies(Cookie("X-Auth", authToken, httpOnly = false))
           }
         }
       case _ => Future.failed(new ProviderException(s"Cannot authenticate with unexpected social provider $provider"))

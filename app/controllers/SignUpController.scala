@@ -19,7 +19,7 @@ class SignUpController @Inject()(cc: SilhouetteControllerComponents, userService
   implicit val userWrites: OWrites[User] = Json.writes[User]
   implicit val userReads: Reads[User] = Json.reads[User]
 
-  def signUp: Action[AnyContent] = UnsecuredAction.async { implicit request: Request[AnyContent] =>
+  def signUp: Action[AnyContent] = unsecuredAction.async { implicit request: Request[AnyContent] =>
     implicit val lang: Lang = supportedLangs.availables.head
     request.body.asJson.flatMap(_.asOpt[User]) match {
       case Some(newUser) if newUser.getPassword.isDefined =>

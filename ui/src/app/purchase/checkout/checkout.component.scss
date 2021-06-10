@@ -1,5 +1,6 @@
 table {
     width: 100%;
+    padding-left: 8px;
 }
 
 tr.example-detail-row {
@@ -30,10 +31,6 @@ tr.example-element-row:not(.example-expanded-row):active {
 
 .example-element-description {
     padding: 16px;
-}
-
-table {
-    padding-left: 8px;
 }
 
 .checkout-card {

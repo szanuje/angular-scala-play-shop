@@ -15,7 +15,25 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get('token');
+    const user = urlParams.get('user');
+
+    if(token != null && user != null) {
+      this.saveAuthCookie(token);
+      this.saveUserCookie(user);
+    }
+
     this.email = this.cookieService.get('user');
+  }
+
+  saveAuthCookie(authString: string) {
+    this.cookieService.set('auth', JSON.stringify(authString));
+  }
+
+  saveUserCookie(name: string) {
+    this.cookieService.set('user', name);
   }
 
 }

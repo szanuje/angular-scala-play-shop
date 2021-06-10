@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -6,10 +6,9 @@ import { Router } from '@angular/router';
   templateUrl: './purchase.component.html',
   styleUrls: ['./purchase.component.scss'],
 })
-export class PurchaseComponent implements OnInit {
+export class PurchaseComponent {
   constructor(private router: Router) {
     //
   }
 
-  ngOnInit(): void {}
 }

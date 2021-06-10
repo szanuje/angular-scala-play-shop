@@ -25,14 +25,14 @@ class UserBasketController @Inject()(ssc: SilhouetteControllerComponents, userBa
   implicit lazy val productReads: Reads[Product] = Json.reads[Product]
 
   def getUserBasket(email: String): Action[AnyContent] =
-    SecuredAction(WithProvider[JWTEnvironment#A](CredentialsProvider.ID)).async { implicit request => {
+    securedAction(WithProvider[JWTEnvironment#A](CredentialsProvider.ID)).async { implicit request => {
       userBasketService.findUserBasket(email)
         .map(res => Ok(Json.toJson(res))) //
     }
     }
 
   def putUserBasket(email: String): Action[UserBasket] =
-    SecuredAction(WithProvider[JWTEnvironment#A](CredentialsProvider.ID)).async(parse.json[UserBasket]) { implicit request => {
+    securedAction(WithProvider[JWTEnvironment#A](CredentialsProvider.ID)).async(parse.json[UserBasket]) { implicit request => {
       val basketProduct = request.body
       userBasketService.updateUserBasket(email, basketProduct)
       Future.successful(Created.withHeaders(("access-control-expose-headers", "X-Auth")))
@@ -40,7 +40,7 @@ class UserBasketController @Inject()(ssc: SilhouetteControllerComponents, userBa
     }
 
   def deleteUserBasket(email: String): Action[AnyContent] =
-    SecuredAction(WithProvider[JWTEnvironment#A](CredentialsProvider.ID)).async { implicit request => {
+    securedAction(WithProvider[JWTEnvironment#A](CredentialsProvider.ID)).async { implicit request => {
       userBasketService.deleteUserBasket(email)
       Future.successful(Ok)
     }

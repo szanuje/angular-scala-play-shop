@@ -5,7 +5,6 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { AngularMaterialModule } from './material.module';
 import { MenuComponent } from './home/menu/menu.component';
-import { AuthModule } from '@auth0/auth0-angular';
 import { environment as env } from '../environments/environment';
 import { PurchaseModule } from './purchase/purchase.module';
 import { CommonModule } from '@angular/common';
@@ -29,10 +28,7 @@ import { LoginPageComponent } from './login-page/login-page.component';
     AngularMaterialModule,
     PurchaseModule,
     AuthenticationModule,
-    HttpClientModule,
-    AuthModule.forRoot({
-      ...env.auth,
-    })
+    HttpClientModule
   ],
   providers: [BasketService, ProductService, CookieService],
   bootstrap: [AppComponent],
