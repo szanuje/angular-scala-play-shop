@@ -17,5 +17,5 @@ WORKDIR /home/max/project
 COPY . /home/max/project
 
 RUN npm install
-EXPOSE 4200
+EXPOSE 4200 8080
 CMD npm start

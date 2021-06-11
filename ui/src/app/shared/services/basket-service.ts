@@ -16,23 +16,22 @@ export class BasketService {
   private basketSubject = new Subject<UserBasket>();
 
   constructor(private http: HttpClient, private cookieService: CookieService) {
-    if (this.cookieService.get('basket') !== '') {
-      let parseBasket = JSON.parse(this.cookieService.get('basket'));
-      this.basket = plainToClass(UserBasket, parseBasket);
-    }
+    this.getBaskett();
   }
 
-  // getBasket(): Observable<UserBasket> {
-  //   if (this.userLoggedIn()) {
-  //     return this.fetchUserBasket();
-  //   }
-  //   else if (this.cookieService.get('basket') !== '') {
-  //     return JSON.parse(this.cookieService.get('basket')).asObservable();
-  //     //this.basketSubject.next(this.basket);
-  //   } else {
-  //     return of(new UserBasket());
-  //   }
-  // }
+  getBaskett(): void {
+    if (this.userLoggedIn()) {
+      this.fetchUserBasket().subscribe((b) => {
+        this.basket = plainToClass(UserBasket, b);
+      });
+    } else if (this.cookieService.get('basket') !== '') {
+      this.basket = plainToClass(
+        UserBasket,
+        JSON.parse(this.cookieService.get('basket'))
+      );
+    }
+    this.basketSubject.next(this.basket);
+  }
 
   getBasket() {
     return this.basket;
@@ -42,20 +41,11 @@ export class BasketService {
     return this.basketSubject;
   }
 
-  initBasketLoggedUser() {
-    console.log('sadf');
-    this.fetchUserBasket().subscribe((b) => {
-      this.basket = b;
-      //this.basketSubject.next(b);
-      console.log('basket', this.basket);
-    });
-  }
-
   addProductToBasket(product: Product): void {
     this.basket.addProductToBasket(product);
     this.updateCookie(this.basket);
     this.saveUserBasket();
-    //this.basketSubject.next(this.basket);
+    this.basketSubject.next(this.basket);
   }
 
   updateCookie(basket: UserBasket): void {

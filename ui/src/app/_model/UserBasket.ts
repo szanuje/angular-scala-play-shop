@@ -32,6 +32,6 @@ export class UserBasket {
       this.basketProducts[idx].totalPrice = ( (this.basketProducts[idx].totalPrice * 100) + (product.price * 100) ) / 100;
       console.log(this.basketProducts[idx].totalPrice);
     }
-    this.totalPrice += product.price;
+    this.totalPrice = ( this.totalPrice * 100 + product.price * 100 ) / 100;
   }
 }

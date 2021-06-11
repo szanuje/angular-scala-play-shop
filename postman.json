@@ -107,7 +107,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"user7\",\n    \"password\": \"pass7\",\n    \"email\": \"user7@gmail.com\"\n}",
+							"raw": "{\n    \"email\": \"user1@gmail.com\",\n    \"name\": \"user1\",\n    \"password\": \"pass1\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -135,7 +135,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"user7\",\n    \"password\": \"pass7\"\n}",
+							"raw": "{\n    \"email\": \"user1@gmail.com\",\n    \"password\": \"pass1\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -166,7 +166,13 @@
 					"name": "get user details",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "X-Auth",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxLUQrREhwZ0RoSHFTU2ZQMExVYis4TjhtdmtRcWw1b0wremJKWTlZKzF0aDRSb0hvVXB3cUhKaFV0RERtcXNTVWFMRFJlcitwN3lUUjRqMU5aREJSeTZPVmp5aTE4REo0bXcyK1NwZz09IiwiaXNzIjoiQW5ndWxhciBTY2FsYSBzaG9wIiwiZXhwIjoxNjIzMjQ3MTY5LCJpYXQiOjE2MjMyMzYzNjksImp0aSI6ImQwMGU0ZjA4ZjkyYWU5OTc4NmY1NzQ0YzRjZWNhMTdkZGVkYTdlNTRhMzUyZWUwZWZhNWNlOGU1Zjg3MWE4M2EzZDMxZGVhOGMyYTRmNjAxZmU4OTgyOTkyMTRhMzZmNzA5YmJmNTQ2YzgwMGJiN2VmOTI2NzVlMTcwYTY2MDdkYTEzNTcxODA3MTViYzBhYzNhZDk5YjI3YjhiMzk4YWM2Njk1NzZmZDIwMTQzZmVhOTJlMDQ1OTk4OTc3YWI4YzBlNTBhMzk2ZDlhMTI1OWM2MWJhNjQ4ZTQ0ZmUzMzI5ODczMTU0YTljN2RiZjgwODI1MTVhOTAxMzlmZWZmMzUifQ.BenYya6Mm99cBzvLtKTSLikGaeH57_M6DP1TYGA_fNc",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "localhost:9000/api/users/user1/details",
 							"host": [
@@ -223,9 +229,15 @@
 					"name": "get user basket",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "X-Auth",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxLVB4XC9IUHNSakcwR1dOSmVYWXpIMHBFWDRsMFZ2a2dSM1pcLzlPSXJtcXQ5VzdGNFlZZ21EODJ6NmZmUkVnTlBNaFpsREgrMEZ5eDdFSThBZ3FqTnpEcnUrMG9VaGF1RGZ1VmE1bVFBPT0iLCJpc3MiOiJBbmd1bGFyIFNjYWxhIHNob3AiLCJleHAiOjE2MjMyNjAxMDUsImlhdCI6MTYyMzI0OTMwNSwianRpIjoiYTU0ZWI0OTA0YjkxNjVkMzNjNTE3ZjBjYTkyZjAzYzQxMWQwNzc3YmRiNTNhNjVmNWE0MmE4NGQzZmY1N2UxMTcyNTc4ZTYxYWE4YzRmNWY4MWQ4NDRmMzYyYmU1OGNmYWU1NzQ2ZTllYTQwZmVhOWMxZDBlMDdjZGE1Nzg3NzRiZmI3ODUwZmIwYWM2MDlkNjQyY2I1ZTM3NWJhYzNkYzA4ZWM4ZGFhZjAzZjA3MWQ2Y2Y5NzhkM2MxMWM0YWI0ODQ0YzkzYTk1MTc0N2E0NWQ4MmIxOWQxYmYxYWZjOGYxZjRjZTU3ZmZjZWY4MjI2OWJmOTAyYzM2MTNjNDZkZiJ9.m-czHlCPNYt4AcmFaM4Wtpit54VL5PbVKVDDaMxsms4",
+								"type": "text"
+							}
+						],
 						"url": {
-							"raw": "localhost:9000/api/users/user1/basket",
+							"raw": "localhost:9000/api/users/user1@gmail.com/basket",
 							"host": [
 								"localhost"
 							],
@@ -233,7 +245,7 @@
 							"path": [
 								"api",
 								"users",
-								"user1",
+								"user1@gmail.com",
 								"basket"
 							]
 						}
@@ -244,7 +256,13 @@
 					"name": "put user basket",
 					"request": {
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "X-Auth",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxLTdUaVd0WW5VZXFLRlluN01OTXh6cnJNZmUxN0U3d1pOanVLYzlcL1JzMnRcL0tLQk5TZmVYYjBNajJRUm5VSmw5Q0piQXBMK1wvY0xYRW4xM3VmV1NnK1crT0NERUpicHRyZEg3TW5pZz09IiwiaXNzIjoiQW5ndWxhciBTY2FsYSBzaG9wIiwiZXhwIjoxNjIzMjQ4MzM0LCJpYXQiOjE2MjMyMzc1MzQsImp0aSI6IjAwMDAzNTYwYjU2YjQwYjUyYjQ3MzY5NjJhOWFiZjMwYTFjZDA5MzMzYjUwZWMxZWEzMTRlYzY5YWNhNDk0NTgxMDk2ZTQ3ZmFmMzk4MjEyODVkNDUxOTgzYTM0NWYyNGViMDM1ODhmYmU3NWRjMDM2NDdkZTVmNWQwMDM0ZjUwOGJiNDkzNDhjZGM5OWJjNGEzOTE1NWRjODMzZjlhNzdiOTYyNDljZGU2Y2FiOGVjMWQzOTNjNWFkYTI0OTBhZmMwNTgxOTZlYzRlNzk3MTA5YTdjODU4MjhkODE0MmY2ZDU4YjFiMGNmM2IwYzNkZWIzYWUyMjFjZWY3ZjQyMjQifQ.5ASzIpBua8vsGKht5GElYf-1EqPRyYwsMGIGzLDZr04",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n    \"basketProducts\": [\n        {\n            \"product\": {\n                \"name\": \"name1\",\n                \"category\": \"category1\",\n                \"description\": \"description1\",\n                \"price\": 49.9900016784668\n            },\n            \"quantity\": 2,\n            \"totalPrice\": 99.9800033569336\n        },\n        {\n            \"product\": {\n                \"name\": \"name2\",\n                \"category\": \"category2\",\n                \"description\": \"description2\",\n                \"price\": 49.9900016784668\n            },\n            \"quantity\": 2,\n            \"totalPrice\": 99.9800033569336\n        }\n    ],\n    \"totalPrice\": 99.9000015258789\n}",
@@ -255,7 +273,8 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:9000/api/users/user1/basket",
+							"raw": "http://localhost:9000/api/users/user1@gmail.com/basket",
+							"protocol": "http",
 							"host": [
 								"localhost"
 							],
@@ -263,7 +282,7 @@
 							"path": [
 								"api",
 								"users",
-								"user1",
+								"user1@gmail.com",
 								"basket"
 							]
 						}
