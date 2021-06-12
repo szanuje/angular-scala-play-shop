@@ -2,6 +2,7 @@ package repositories
 
 import models.Product
 import play.api.Configuration
+import play.modules.reactivemongo.ReactiveMongoApi
 import reactivemongo.api.Cursor
 import reactivemongo.api.bson.BSONDocument
 
@@ -9,7 +10,8 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class ProductRepository @Inject()(implicit ec: ExecutionContext, config: Configuration)
+class ProductRepository @Inject()(implicit ec: ExecutionContext, config: Configuration,
+                                  reactiveMongoApi: ReactiveMongoApi)
   extends AbstractMongoRepository {
 
   def createProduct(product: Product): Future[Any] = {

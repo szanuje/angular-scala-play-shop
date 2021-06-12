@@ -2,13 +2,15 @@ package repositories
 
 import models.{Client, UserDetails}
 import play.api.Configuration
+import play.modules.reactivemongo.ReactiveMongoApi
 import reactivemongo.api.bson.BSONDocument
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class UserDetailsRepository @Inject()(implicit ec: ExecutionContext, config: Configuration)
+class UserDetailsRepository @Inject()(implicit ec: ExecutionContext, config: Configuration,
+                                      reactiveMongoApi: ReactiveMongoApi)
   extends AbstractMongoRepository {
 
   def findUserDetails(email: String): Future[Option[UserDetails]] = {

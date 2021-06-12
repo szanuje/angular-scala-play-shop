@@ -2,13 +2,15 @@ package repositories
 
 import models.{Client, UserBasket}
 import play.api.Configuration
+import play.modules.reactivemongo.ReactiveMongoApi
 import reactivemongo.api.bson.BSONDocument
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class UserBasketRepository @Inject()(implicit ec: ExecutionContext, config: Configuration)
+class UserBasketRepository @Inject()(implicit ec: ExecutionContext, config: Configuration,
+                                     reactiveMongoApi: ReactiveMongoApi)
   extends AbstractMongoRepository {
 
   val USER_EMAIL = "user.email"

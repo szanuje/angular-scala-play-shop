@@ -1,29 +1,20 @@
 package repositories
 
-import akka.http.scaladsl.model.DateTime
-import models._
 import play.api.Configuration
-import reactivemongo.api.MongoConnection.ParsedURI
+import play.modules.reactivemongo.ReactiveMongoApi
 import reactivemongo.api.bson.collection.BSONCollection
-import reactivemongo.api.bson.{BSONDocumentReader, BSONDocumentWriter, Macros}
-import reactivemongo.api.{AsyncDriver, DB, MongoConnection}
 
 import scala.concurrent.{ExecutionContext, Future}
 
-abstract class AbstractMongoRepository(implicit ec: ExecutionContext, config: Configuration) {
-
-  private val MONGO_URL: String = config.underlying.getString("mongodb.uri")
-  private val mongoDriver: AsyncDriver = AsyncDriver()
-  private lazy val parsedURIFuture: Future[ParsedURI] = MongoConnection.fromString(MONGO_URL)
-  private lazy val connection: Future[MongoConnection] = parsedURIFuture.flatMap(u => mongoDriver.connect(u))
-  private val db: Future[DB] = connection.flatMap(_.database("shop"))
+abstract class AbstractMongoRepository(implicit ec: ExecutionContext, config: Configuration,
+                                       reactiveMongoApi: ReactiveMongoApi) {
 
   def productsCollection: Future[BSONCollection] = {
-    db.map(_.collection("products"))
+    reactiveMongoApi.database.map(_.collection("products"))
   }
 
   def clientsCollection: Future[BSONCollection] = {
-    db.map(_.collection("clients"))
+    reactiveMongoApi.database.map(_.collection("clients"))
   }
 
 }
