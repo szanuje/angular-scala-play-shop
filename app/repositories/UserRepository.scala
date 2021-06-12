@@ -1,9 +1,9 @@
 package repositories
 
 import com.mohiva.play.silhouette.api.LoginInfo
-import models.{Client, User, UserBasket, UserDetails}
+import models.{Client, User, UserBasket, UserDetails, UserOrder}
 import play.api.Configuration
-import reactivemongo.api.bson.BSONDocument
+import reactivemongo.api.bson.{BSONArray, BSONDocument}
 import reactivemongo.api.commands.WriteResult
 
 import javax.inject.{Inject, Singleton}
@@ -18,8 +18,9 @@ class UserRepository @Inject()(implicit ec: ExecutionContext, config: Configurat
       col.insert.one(
         BSONDocument(
           "user" -> user,
-          "userDetails" -> UserDetails("", "", "", "", ""),
-          "userBasket" -> UserBasket(List(), 0.0)
+          "userDetails" -> UserDetails("", "", "", "", "", "", ""),
+          "userOrders" -> BSONArray(),
+          "userBasket" -> UserBasket(List(), BigDecimal("0.0"))
         )
       )
     }

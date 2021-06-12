@@ -38,26 +38,26 @@
 </table>
 
 <mat-card class="checkout-card">
-    <form action="">
+    <form #orderForm="ngForm" (ngSubmit)="placeOrder(orderForm.value)">
 
         <div class="formfield-wrapper">
             <div>
                 <p>
                     <mat-form-field appearance="legacy">
                         <mat-label>Name</mat-label>
-                        <input matInput placeholder="">
+                        <input matInput placeholder="" name="name" ngModel>
                     </mat-form-field>
                 </p>
                 <p>
                     <mat-form-field appearance="legacy">
                         <mat-label>Surname</mat-label>
-                        <input matInput placeholder="">
+                        <input matInput placeholder="" name="surname" ngModel>
                     </mat-form-field>
                 </p>
                 <p>
                     <mat-form-field appearance="legacy">
                         <mat-label>Phone</mat-label>
-                        <input matInput placeholder="">
+                        <input matInput placeholder="" name="phone" ngModel>
                         <mat-hint></mat-hint>
                     </mat-form-field>
                 </p>
@@ -66,28 +66,34 @@
            <div>
             <p>
                 <mat-form-field appearance="legacy">
+                    <mat-label>Address</mat-label>
+                    <input matInput placeholder="" name="address" ngModel>
+                </mat-form-field>
+            </p>
+            <p>
+                <mat-form-field appearance="legacy">
                     <mat-label>City</mat-label>
-                    <input matInput placeholder="">
+                    <input matInput placeholder="" name="city" ngModel>
                     <mat-hint></mat-hint>
                 </mat-form-field>
             </p>
             <p>
                 <mat-form-field appearance="legacy">
-                    <mat-label>Street</mat-label>
-                    <input matInput placeholder="">
+                    <mat-label>Country</mat-label>
+                    <input matInput placeholder="" name="country" ngModel>
                     <mat-hint></mat-hint>
                 </mat-form-field>
             </p>
             <p>
                 <mat-form-field appearance="legacy">
-                    <mat-label>House number</mat-label>
-                    <input matInput placeholder="">
+                    <mat-label>Postal Code</mat-label>
+                    <input matInput placeholder="" name="postalCode" ngModel>
                     <mat-hint></mat-hint>
                 </mat-form-field>
             </p>
            </div>
         </div>
-        <button type="button" class="checkout-button" mat-raised-button color="primary" (click)="openSnackBar()">
+        <button type="submit" class="checkout-button" mat-raised-button color="primary" (click)="openSnackBar()">
             Proceed {{getBasketValue()}}$
         </button>
     </form>

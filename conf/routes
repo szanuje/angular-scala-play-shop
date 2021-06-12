@@ -26,5 +26,8 @@ GET     /api/users/:name/basket  controllers.UserBasketController.getUserBasket(
 PUT     /api/users/:name/basket  controllers.UserBasketController.putUserBasket(name: String)
 DELETE  /api/users/:name/basket  controllers.UserBasketController.deleteUserBasket(name: String)
 
+# order
+POST    /api/users/:name/order   controllers.OrderController.placeOrder(name: String)
+
 # Serve static assets under public directory
 GET /*file controllers.FrontendController.assetOrDefault(file)

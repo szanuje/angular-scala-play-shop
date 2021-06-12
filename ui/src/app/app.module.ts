@@ -14,6 +14,7 @@ import { ProductService } from './shared/services/product-service';
 import { HttpClientModule } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 import { LoginPageComponent } from './login-page/login-page.component';
+import { OrderService } from './shared/services/order-service';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,7 @@ import { LoginPageComponent } from './login-page/login-page.component';
     AuthenticationModule,
     HttpClientModule
   ],
-  providers: [BasketService, ProductService, CookieService],
+  providers: [BasketService, ProductService, CookieService, OrderService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

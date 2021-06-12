@@ -1,5 +1,6 @@
 package repositories
 
+import akka.http.scaladsl.model.DateTime
 import models._
 import play.api.Configuration
 import reactivemongo.api.MongoConnection.ParsedURI
@@ -16,30 +17,6 @@ abstract class AbstractMongoRepository(implicit ec: ExecutionContext, config: Co
   private lazy val parsedURIFuture: Future[ParsedURI] = MongoConnection.fromString(MONGO_URL)
   private lazy val connection: Future[MongoConnection] = parsedURIFuture.flatMap(u => mongoDriver.connect(u))
   private val db: Future[DB] = connection.flatMap(_.database("shop"))
-
-  implicit def clientWriter: BSONDocumentWriter[Client] = Macros.writer[Client]
-
-  implicit def clientReader: BSONDocumentReader[Client] = Macros.reader[Client]
-
-  implicit def userWriter: BSONDocumentWriter[User] = Macros.writer[User]
-
-  implicit def userReader: BSONDocumentReader[User] = Macros.reader[User]
-
-  implicit def userDetailsWriter: BSONDocumentWriter[UserDetails] = Macros.writer[UserDetails]
-
-  implicit def userDetailsReader: BSONDocumentReader[UserDetails] = Macros.reader[UserDetails]
-
-  implicit def userBasketWriter: BSONDocumentWriter[UserBasket] = Macros.writer[UserBasket]
-
-  implicit def userBasketReader: BSONDocumentReader[UserBasket] = Macros.reader[UserBasket]
-
-  implicit def basketProductWriter: BSONDocumentWriter[BasketProduct] = Macros.writer[BasketProduct]
-
-  implicit def basketProductReader: BSONDocumentReader[BasketProduct] = Macros.reader[BasketProduct]
-
-  implicit def productWriter: BSONDocumentWriter[Product] = Macros.writer[Product]
-
-  implicit def productReader: BSONDocumentReader[Product] = Macros.reader[Product]
 
   def productsCollection: Future[BSONCollection] = {
     db.map(_.collection("products"))

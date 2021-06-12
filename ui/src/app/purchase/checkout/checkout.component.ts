@@ -10,6 +10,9 @@ import { BasketService } from 'src/app/shared/services/basket-service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { BasketProduct } from 'src/app/_model/BasketProduct';
 import { UserBasket } from 'src/app/_model/UserBasket';
+import { CookieService } from 'ngx-cookie-service';
+import { OrderService } from 'src/app/shared/services/order-service';
+import { UserDetails } from 'src/app/_model/UserDetails';
 
 @Component({
   selector: 'app-checkout',
@@ -33,7 +36,9 @@ export class CheckoutComponent implements OnInit {
 
   constructor(
     private basketService: BasketService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private cookieService: CookieService,
+    private orderService: OrderService
   ) {
     this.basket = this.basketService.getBasket();
   }
@@ -58,7 +63,21 @@ export class CheckoutComponent implements OnInit {
     return this.basket.getTotalPrice();
   }
 
+  placeOrder(userDetails: UserDetails) {
+    console.log(userDetails);
+    if( this.userLoggedIn() ) {
+      this.orderService.placeOrder(userDetails);
+    }
+  }
+
   openSnackBar(): void {
     this._snackBar.open('Success!', 'Close');
+  }
+
+  userLoggedIn(): boolean {
+    if (this.cookieService.get('user') !== '') {
+      return true;
+    }
+    return false;
   }
 }
