@@ -5,7 +5,6 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { AngularMaterialModule } from './material.module';
 import { MenuComponent } from './home/menu/menu.component';
-import { environment as env } from '../environments/environment';
 import { PurchaseModule } from './purchase/purchase.module';
 import { CommonModule } from '@angular/common';
 import { AuthenticationModule } from './authentication/authentication.module';
